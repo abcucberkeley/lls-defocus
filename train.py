@@ -25,8 +25,18 @@ class PSFDataset(torch.utils.data.Dataset):
 
 
 train_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
+
 train_dataset = PSFDataset(train_path)
 train_loader = DataLoader(train_dataset, batch_size=1, shuffle=False, follow_batch=['x_s', 'x_t'])
 
 def train():
+    for photons in glob.glob(train_path):
+        photons_path = os.path.join(train_path, photons)
+        photons_path = os.path.join(photons_path, "amp_p0-p0")
+        train_dataset = PSFDataset(photons_path)
+        train_loader = DataLoader(train_dataset, batch_size=1, shuffle=False, follow_batch=['x_s', 'x_t'])
+        for json, tif in train_loader:
+            pass
+
+if __name__ == '__main__':
     pass
