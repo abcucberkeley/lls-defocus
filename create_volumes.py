@@ -1,10 +1,14 @@
+import sys
+sys.path.append('.')
+sys.path.append('./submod/opticalaberrations/src')
+
 from submod.opticalaberrations.src import psf_dataset
 from submod.opticalaberrations.src.synthetic import SyntheticPSF
 from submod.opticalaberrations.src.wavefront import Wavefront
 from pathlib import Path
 import numpy as np
 
-local_dir = "/Users/ethantam/Desktop/abc/lls-defocus/data"
+data_dir = "/Users/ethantam/Desktop/abc/lls-defocus/data"
 
 def aberrated_defocused_psf(amp, lls_offset, zernike_mode):
 
@@ -38,7 +42,7 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode):
     # simulate a PSF
     sample = psf_dataset.simulate_psf(
         filename='1',
-        outdir=Path(f"{local_dir}/dataset/aberrations"),
+        outdir=Path(f"{data_dir}/dataset/aberrations"),
         gen=gen,
         phi=phi,
         emb=False,
@@ -53,6 +57,5 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode):
 for amp in [0.0,0.5,1.0]:
     for lls_offset in [0.0,0.5,1.0]:
         for zernike_mode in range(3,15):
-            if zernike_mode == 4:
-                continue
-            aberrated_defocused_psf(amp, lls_offset, zernike_mode)
+            if zernike_mode != 4:   
+                aberrated_defocused_psf(amp, lls_offset, zernike_mode)
