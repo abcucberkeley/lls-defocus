@@ -10,7 +10,7 @@ import numpy as np
 
 data_dir = "/Users/ethantam/Desktop/abc/lls-defocus/data"
 
-def aberrated_defocused_psf(amp, lls_offset, zernike_mode):
+def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb):
 
     # set up PSF generator with correct voxel size
     gen = SyntheticPSF(
@@ -45,7 +45,7 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode):
         outdir=Path(f"{data_dir}/dataset/aberrations"),
         gen=gen,
         phi=phi,
-        emb=False,
+        emb=fourier_emb,
         photons=100000,
         noise=True,                 # if you want to add read and shot noise to the PSF
         normalize=True,             # normalize the PSF by the max value
@@ -54,8 +54,9 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode):
 
     assert sample.shape == gen.psf_shape
 
+fourier_emb = False
 for amp in [0.0,0.5,1.0]:
     for lls_offset in [0.0,0.5,1.0]:
         for zernike_mode in range(3,15):
             if zernike_mode != 4:   
-                aberrated_defocused_psf(amp, lls_offset, zernike_mode)
+                aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb)
