@@ -1,6 +1,7 @@
 import sys
 sys.path.append('.')
-sys.path.append('./submod/opticalaberrations/src')
+# sys.path.append('./submod/opticalaberrations/src')
+sys.path.append('/clusterfs/fiona/ethan/git-manage/opticalaberrations/src')
 
 from submod.opticalaberrations.src import psf_dataset
 from submod.opticalaberrations.src.synthetic import SyntheticPSF
@@ -8,7 +9,8 @@ from submod.opticalaberrations.src.wavefront import Wavefront
 from pathlib import Path
 import numpy as np
 
-data_dir = "/Users/ethantam/Desktop/abc/lls-defocus/data"
+# data_dir = "/Users/ethantam/Desktop/abc/lls-defocus/data"
+data_dir = "/clusterfs/nvme/ethan/dataset"
 
 def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb):
 
