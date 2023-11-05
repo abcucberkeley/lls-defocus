@@ -7,7 +7,7 @@ sys.path.append('/clusterfs/fiona/ethan/git-manage/opticalaberrations/src')
 # from submod.opticalaberrations.src.synthetic import SyntheticPSF
 # from submod.opticalaberrations.src.wavefront import Wavefront
 
-from psf_dataset import simulate_psf
+import psf_dataset
 from synthetic import SyntheticPSF
 from wavefront import Wavefront
 from pathlib import Path
