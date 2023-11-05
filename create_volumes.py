@@ -7,7 +7,7 @@ sys.path.append('/clusterfs/fiona/ethan/git-manage/opticalaberrations/src')
 # from submod.opticalaberrations.src.synthetic import SyntheticPSF
 # from submod.opticalaberrations.src.wavefront import Wavefront
 
-import psf_dataset
+from psf_dataset import simulate_psf
 from synthetic import SyntheticPSF
 from wavefront import Wavefront
 from pathlib import Path
@@ -46,7 +46,7 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb):
     np.testing.assert_array_equal(phi.amplitudes, zernikes)
 
     # simulate a PSF
-    sample = psf_dataset.simulate_psf(
+    sample = simulate_psf(
         filename='1',
         outdir=Path(f"{data_dir}/dataset/aberrations"),
         gen=gen,
