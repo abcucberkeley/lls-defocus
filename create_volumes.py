@@ -46,7 +46,7 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb):
     np.testing.assert_array_equal(phi.amplitudes, zernikes)
 
     # simulate a PSF
-    sample = simulate_psf(
+    sample = psf_dataset.simulate_psf(
         filename='1',
         outdir=Path(f"{data_dir}/aberrations"),
         gen=gen,
