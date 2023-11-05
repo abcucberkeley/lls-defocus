@@ -48,7 +48,7 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb):
     # simulate a PSF
     sample = simulate_psf(
         filename='1',
-        outdir=Path(f"{data_dir}/dataset/aberrations"),
+        outdir=Path(f"{data_dir}/aberrations"),
         gen=gen,
         phi=phi,
         emb=fourier_emb,
