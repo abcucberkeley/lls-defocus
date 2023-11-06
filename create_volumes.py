@@ -3,6 +3,9 @@ sys.path.append('.')
 # sys.path.append('./submod/opticalaberrations/src')
 sys.path.append('/clusterfs/fiona/ethan/git-manage/opticalaberrations/src')
 
+import warnings
+warnings.filterwarnings("ignore")
+
 # from submod.opticalaberrations.src import psf_dataset
 # from submod.opticalaberrations.src.synthetic import SyntheticPSF
 # from submod.opticalaberrations.src.wavefront import Wavefront
@@ -16,7 +19,7 @@ import numpy as np
 # data_dir = "/Users/ethantam/Desktop/abc/lls-defocus/data"
 data_dir = "/clusterfs/nvme/ethan/dataset"
 
-def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb):
+def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name):
 
     # set up PSF generator with correct voxel size
     gen = SyntheticPSF(
@@ -47,7 +50,7 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb):
 
     # simulate a PSF
     sample = psf_dataset.simulate_psf(
-        filename='1',
+        filename=name,
         outdir=Path(f"{data_dir}/aberrations"),
         gen=gen,
         phi=phi,
@@ -60,9 +63,11 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb):
 
     assert sample.shape == gen.psf_shape
 
+name = "1"
 fourier_emb = False
 for amp in [0.0,0.5,1.0]:
     for lls_offset in [0.0,0.5,1.0]:
         for zernike_mode in range(3,15):
-            if zernike_mode != 4:   
-                aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb)
+            if zernike_mode != 4:
+                name = str(int(name) + 1)   
+                aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name)
