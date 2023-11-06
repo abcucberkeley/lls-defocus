@@ -17,7 +17,8 @@ from pathlib import Path
 import numpy as np
 
 # data_dir = "/Users/ethantam/Desktop/abc/lls-defocus/data"
-data_dir = "/clusterfs/nvme/ethan/dataset"
+# data_dir = "/clusterfs/nvme/ethan/dataset"
+data_dir = "/clusterfs/nvme/ethan/lls-defocus/data"
 
 def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name):
 
