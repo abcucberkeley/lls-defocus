@@ -69,5 +69,5 @@ for amp in [0.0,0.5,1.0]:
     for lls_offset in [0.0,0.5,1.0]:
         for zernike_mode in range(3,15):
             if zernike_mode != 4:
-                name = str(int(name) + 1)   
                 aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name)
+                name = str(int(name) + 1)   
