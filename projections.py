@@ -16,18 +16,18 @@ def plot_projections(xy_projection, xz_projection, yz_projection):
 
     axes[0].imshow(xy_projection, cmap='gray')
     axes[0].set_title('XY Projection')
-    axes[0].xaxis("X axis")
-    axes[0].yaxis("Y axis")
+    axes[0].set_xlabel('X axis')
+    axes[0].set_ylabel("Y axis")
 
     axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
-    axes[1].xaxis("X axis")
-    axes[1].yaxis("Z axis")
+    axes[0].set_xlabel('X axis')
+    axes[0].set_ylabel("Z axis")
 
     axes[2].imshow(yz_projection.T, cmap='gray', aspect='auto')
     axes[2].set_title('YZ Projection')
-    axes[2].xaxis("Z axis")
-    axes[2].yaxis("Y axis")
+    axes[0].set_xlabel('Z axis')
+    axes[0].set_ylabel("Y axis")
 
     plt.show()
 
