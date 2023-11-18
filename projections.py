@@ -4,6 +4,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import tifffile as tiff
 
 def create_projections(data):
+    # 2D images representing the distribution of voxel intensities along an axis
     xy_projection = np.sum(data, axis=0)
     xz_projection = np.sum(data, axis=1)
     yz_projection = np.sum(data, axis=2)
@@ -15,12 +16,18 @@ def plot_projections(xy_projection, xz_projection, yz_projection):
 
     axes[0].imshow(xy_projection, cmap='gray')
     axes[0].set_title('XY Projection')
+    axes[0].xaxis("X axis")
+    axes[0].yaxis("Y axis")
 
     axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
+    axes[1].xaxis("X axis")
+    axes[1].yaxis("Z axis")
 
     axes[2].imshow(yz_projection.T, cmap='gray', aspect='auto')
     axes[2].set_title('YZ Projection')
+    axes[2].xaxis("Z axis")
+    axes[2].yaxis("Y axis")
 
     plt.show()
 
