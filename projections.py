@@ -2,6 +2,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import tifffile as tiff
+import re
+
+def parameters():
+    params = []
+    count = 1
+    for amp in [0.0,0.5,1.0]:
+        for lls_offset in [0.0,0.5,1.0]:
+            for z in range(3,15):
+                if z != 4:
+                    params.append([count, amp, lls_offset, z])
+    return params
+
 
 def create_projections(data):
     # 2D images representing the distribution of voxel intensities along an axis
@@ -11,7 +23,7 @@ def create_projections(data):
 
     return xy_projection, xz_projection, yz_projection
 
-def plot_projections(xy_projection, xz_projection, yz_projection):
+def plot_projections(xy_projection, xz_projection, yz_projection, title):
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
     axes[0].imshow(xy_projection, cmap='gray')
@@ -29,11 +41,19 @@ def plot_projections(xy_projection, xz_projection, yz_projection):
     axes[2].set_xlabel('Z axis')
     axes[2].set_ylabel("Y axis")
 
+    fig.suptitle(title)
+
     plt.show()
 
 def main():
+    params = parameters()
+
     # Replace 'your_file.tif' with the path to your 3D TIF file
     file_path = '/clusterfs/nvme/ethan/dataset/aberrations/33.tif'
+    match = re.search(r'\d+$', file_path)
+    file_num = int(match.group()) - 1
+
+    title = f'Amplitude: {params[file_num][1]}, LLS Offset: {params[file_num][2]}, Zernike Mode: {params[file_num][3]}'
 
     # Read the TIF file
     data = tiff.imread(file_path)
@@ -43,7 +63,7 @@ def main():
     xy_projection, xz_projection, yz_projection = create_projections(data)
 
     # Plot the projections
-    plot_projections(xy_projection, xz_projection, yz_projection)
+    plot_projections(xy_projection, xz_projection, yz_projection, title)
 
 if __name__ == "__main__":
     main()
