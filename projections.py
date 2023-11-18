@@ -53,7 +53,7 @@ def main():
     match = re.search(r'\d+', file_path)
     file_num = int(match.group()) - 1
 
-    title = f'Amplitude: {params[file_num][1]}, LLS Offset: {params[file_num][2]}, Zernike Mode: {params[file_num][3]}'
+    title = f'{file_num}.tif, Amplitude: {params[file_num][1]}, LLS Offset: {params[file_num][2]}, Zernike Mode: {params[file_num][3]}'
 
     # Read the TIF file
     data = tiff.imread(file_path)
