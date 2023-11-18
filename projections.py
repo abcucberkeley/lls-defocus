@@ -50,7 +50,7 @@ def main():
 
     # Replace 'your_file.tif' with the path to your 3D TIF file
     file_path = '/clusterfs/nvme/ethan/dataset/aberrations/33.tif'
-    match = re.search(r'\d+$', file_path)
+    match = re.search(r'\d+', file_path)
     file_num = int(match.group()) - 1
 
     title = f'Amplitude: {params[file_num][1]}, LLS Offset: {params[file_num][2]}, Zernike Mode: {params[file_num][3]}'
