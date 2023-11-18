@@ -30,7 +30,7 @@ def main():
 
     # Read the TIF file
     data = tiff.imread(file_path)
-    print(data.size)
+    print(data.shape)
 
     # Create XY, XZ, and YZ projections
     xy_projection, xz_projection, yz_projection = create_projections(data)
