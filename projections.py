@@ -21,13 +21,13 @@ def plot_projections(xy_projection, xz_projection, yz_projection):
 
     axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
-    axes[0].set_xlabel('X axis')
-    axes[0].set_ylabel("Z axis")
+    axes[1].set_xlabel('X axis')
+    axes[1].set_ylabel("Z axis")
 
     axes[2].imshow(yz_projection.T, cmap='gray', aspect='auto')
     axes[2].set_title('YZ Projection')
-    axes[0].set_xlabel('Z axis')
-    axes[0].set_ylabel("Y axis")
+    axes[2].set_xlabel('Z axis')
+    axes[2].set_ylabel("Y axis")
 
     plt.show()
 
