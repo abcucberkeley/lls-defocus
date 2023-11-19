@@ -49,7 +49,7 @@ def main():
     params = parameters()
 
     # Replace 'your_file.tif' with the path to your 3D TIF file
-    file_path = '/clusterfs/nvme/ethan/dataset/aberrations/52.tif'
+    file_path = '/clusterfs/nvme/ethan/dataset/aberrations/53.tif'
     match = re.search(r'\d+', file_path)
     file_num = int(match.group()) - 1
 
