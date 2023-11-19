@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import tifffile as tiff
 import re
 
@@ -48,7 +47,6 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title):
 def main():
     params = parameters()
 
-    # Replace 'your_file.tif' with the path to your 3D TIF file
     file_path = '/clusterfs/nvme/ethan/dataset/aberrations/99.tif'
     match = re.search(r'\d+', file_path)
     file_num = int(match.group()) - 1
