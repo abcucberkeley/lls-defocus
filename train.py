@@ -19,6 +19,7 @@ class PSFDataset(torch.utils.data.Dataset):
         with open(self.gt_files[idx],'r') as j:
             load_json = json.load(j)
             lls_offset = load_json["lls_defocus_offset"]
+            lls_offset = round(lls_offset, 2) # round to to hundredths place
             return image, lls_offset
 
 # this should only return the dataloader for ONLY ONE defocus_xxx_xxx
@@ -41,6 +42,7 @@ def dataloader(path, batch_size, val_split):
     num_val = int(num_data * val_split)
     num_train = num_data - num_val
 
+    # training set
     train_idx = idx[:num_train]
     train_input_filenames = input_files[train_idx]
     train_gt_filenames = gt_files[train_idx]
@@ -49,6 +51,7 @@ def dataloader(path, batch_size, val_split):
     train_data = PSFDataset(train_input_filenames, train_gt_filenames)
     train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
 
+    # validation set
     val_idx = idx[num_train:]
     val_input_filenames = input_files[val_idx]
     val_gt_filenames = gt_files[val_idx]
@@ -79,4 +82,3 @@ def train(input_path):
 if __name__ == '__main__':
     train_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
     train(train_path)
-    pass
