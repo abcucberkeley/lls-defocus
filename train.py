@@ -1,9 +1,18 @@
 import torch
+import torch.nn as nn
+import torch.optim as optim
 import json
 import os
 import skimage.io as io
 import numpy as np
 
+class ConvModel(nn.Model):
+    def __init__(self):
+        super()
+        pass
+    def forward(self, x):
+        pass
+    
 class PSFDataset(torch.utils.data.Dataset):
     # input files : list of volumes
     # gt_files : list of json files with the lls_defocus_offset value
@@ -63,22 +72,44 @@ def dataloader(path, batch_size, val_split):
     return train_dataloader, val_dataloader
     
 
-def train(input_path):
-    photons = os.listdir(input_path)
-    for photon in photons:
-        photons_path = os.path.join(input_path, photon)
-        photons_path = os.path.join(photons_path, "amp_p0-p0")
-        defocused_psfs = os.listdir(photons_path)
-        for defocused_psf in defocused_psfs:
-            psf_path = os.path.join(photons_path, defocused_psf)
-            train_dataloader, val_dataloader = dataloader(psf_path, 1)
-            
-            for image, lls_offset in train_dataloader:
-                pass
+def train(input_path, n_epochs):
+    model = ConvModel()
+    loss_fn = nn.CrossEntropyLoss()
+    optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
-            for image, lls_offset in val_dataloader:
-                pass
+    for epoch in range(n_epochs):
+        photons = os.listdir(input_path)
+        for photon in photons:
+            photons_path = os.path.join(input_path, photon)
+            photons_path = os.path.join(photons_path, "amp_p0-p0")
+            defocused_psfs = os.listdir(photons_path)
+
+            for defocused_psf in defocused_psfs:
+                train_total_loss = 0
+                val_total_loss = 0
+                psf_path = os.path.join(photons_path, defocused_psf)
+                train_dataloader, val_dataloader = dataloader(psf_path, 1)
+                
+                # training
+                for image, lls_offset in train_dataloader:
+                    lls_offset_pred = model(image)
+                    loss = loss_fn(lls_offset_pred, lls_offset)
+                    train_total_loss += loss
+                    optimizer.zero_grad()
+                    loss.backward()
+                    optimizer.step()
+                    
+                # validation
+                abs_difference = 0
+                for image, lls_offset in val_dataloader:
+                    lls_offset_pred = model(image)
+                    loss = loss_fn(lls_offset_pred, lls_offset)
+                    abs_difference += abs(lls_offset_pred - lls_offset)
+                    val_total_loss += loss
+
+                print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}, Model Accuracy: {abs_difference / len(val_dataloader)}')
 
 if __name__ == '__main__':
-    train_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
-    train(train_path)
+    input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
+    n_epochs = 100
+    train(input_path, n_epochs)
