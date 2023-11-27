@@ -79,7 +79,6 @@ def dataloader(path, batch_size, val_split):
     idx = np.arange(num_data)
     np.random.shuffle(idx)
     num_train = int(num_data * val_split)
-    num_val = num_data - num_train
 
     # training set
     train_idx = idx[:num_train]
