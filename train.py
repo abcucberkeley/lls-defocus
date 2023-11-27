@@ -25,7 +25,7 @@ class ConvModel(nn.Module):
         self.fc2 = nn.Linear(512, 1)
         
     def forward(self, x):
-        x = x.unsqueeze(0).unsqueeze(0)
+        x = x.unsqueeze(0).unsqueeze(0) # should be (batch size, 1, 64, 64, 64)
         x = F.relu(self.conv1(x))
         x = self.pool(x)
         x = F.relu(self.conv2(x))
@@ -118,7 +118,7 @@ def train(input_path, n_epochs):
                 train_total_loss = 0
                 val_total_loss = 0
                 psf_path = os.path.join(photons_path, defocused_psf)
-                train_dataloader, val_dataloader = dataloader(psf_path, 1)
+                train_dataloader, val_dataloader = dataloader(psf_path, batch_size=1, val_split=0.8)
                 
                 # training
                 for image, lls_offset in train_dataloader:
