@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import torch.nn.functional as F
 import json
 import os
 import skimage.io as io
@@ -8,10 +9,34 @@ import numpy as np
 
 class ConvModel(nn.Model):
     def __init__(self):
-        super()
-        pass
+        super().__init__()
+
+        # convolutional layers
+        self.conv1 = nn.Conv3d(1, 32, kernel_size=3, stride=1, padding=1)
+        self.conv2 = nn.Conv3d(32, 64, kernel_size=3, stride=1, padding=1)
+        self.conv3 = nn.Conv3d(64, 128, kernel_size=3, stride=1, padding=1)
+
+        # max pooling layer
+        self.pool = nn.MaxPool3d(kernel_size=2, stride=2, padding=0)
+
+        # fully connected layers
+        self.fc1 = nn.Linear(128 * 8 * 8 * 8, 512)
+        self.fc2 = nn.Linear(512, 1)
+        
     def forward(self, x):
-        pass
+        x = F.relu(self.conv1(x))
+        x = self.pool(x)
+        x = F.relu(self.conv2(x))
+        x = self.pool(x)
+        x = F.relu(self.conv3(x))
+        x = self.pool(x)
+
+        x = x.view(-1, 128 * 8 * 8 * 8)
+        
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+
+        return x
     
 class PSFDataset(torch.utils.data.Dataset):
     # input files : list of volumes
