@@ -31,6 +31,8 @@ class ConvModel(nn.Model):
         x = F.relu(self.conv3(x))
         x = self.pool(x)
 
+        print(x.shape) # check shape
+
         x = x.view(-1, 128 * 8 * 8 * 8)
         
         x = F.relu(self.fc1(x))
@@ -136,5 +138,10 @@ def train(input_path, n_epochs):
 
 if __name__ == '__main__':
     input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
-    n_epochs = 100
-    train(input_path, n_epochs)
+    
+    vol = "/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed/photons_100001-150000/amp_p0-p0/defocus_0p0-0p1/33.tif"
+    model = ConvModel()
+    lls_offset_pred = model(vol)
+    print(lls_offset_pred)
+    # n_epochs = 100
+    # train(input_path, n_epochs)
