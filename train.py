@@ -139,11 +139,33 @@ def train(input_path, n_epochs):
 if __name__ == '__main__':
     input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
     
-    vol = "/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed/photons_100001-150000/amp_p0-p0/defocus_0p0-0p1/33.tif"
-    vol = io.imread(vol)
-    print(vol.shape)
-    model = ConvModel()
-    lls_offset_pred = model(vol)
-    print(lls_offset_pred)
+    vol_path = "/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed/photons_100001-150000/amp_p0-p0/defocus_0p0-0p1/33.tif"
+    vol = io.imread(vol_path)
+
+    from PIL import Image
+
+    def is_grayscale(image_path):
+        img = Image.open(image_path).convert("RGB")
+        img_array = img.getdata()
+
+        # Check if all R, G, and B values are equal for each pixel
+        is_grayscale = all(r == g == b for r, g, b in img_array)
+
+        return is_grayscale
+
+    # Example usage
+    result = is_grayscale(vol_path)
+
+    if result:
+        print("The image is grayscale.")
+    else:
+        print("The image is not grayscale.")
+    
+    
+    
+    # print(vol.shape) # (64, 64, 64)
+    # model = ConvModel()
+    # lls_offset_pred = model(vol)
+    # print(lls_offset_pred)
     # n_epochs = 100
     # train(input_path, n_epochs)
