@@ -154,8 +154,8 @@ if __name__ == '__main__':
     path = "/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed/photons_100001-150000/amp_p0-p0/defocus_0p0-0p1/"
     train_dataloader, val_dataloader = dataloader(path, batch_size=1, val_split=0.8)
     for image, lls_offset in train_dataloader:
-        print(image.shape)
-        print(lls_offset) 
+        print("Image size: ", image.shape)
+        print("Offset: , "lls_offset) 
         break
 
     # n_epochs = 100
