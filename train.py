@@ -155,7 +155,7 @@ if __name__ == '__main__':
     train_dataloader, val_dataloader = dataloader(path, batch_size=1, val_split=0.8)
     for image, lls_offset in train_dataloader:
         print("Image size: ", image.shape)
-        print("Offset: , "lls_offset) 
+        print("Offset: , ", lls_offset) 
         break
 
     # n_epochs = 100
