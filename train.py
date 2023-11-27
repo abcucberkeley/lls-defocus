@@ -78,8 +78,8 @@ def dataloader(path, batch_size, val_split):
     num_data = len(input_files)
     idx = np.arange(num_data)
     np.random.shuffle(idx)
-    num_val = int(num_data * val_split)
-    num_train = num_data - num_val
+    num_train = int(num_data * val_split)
+    num_val = num_data - num_train
 
     # training set
     train_idx = idx[:num_train]
