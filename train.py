@@ -12,6 +12,7 @@ class ConvModel(nn.Module):
         super().__init__()
 
         # convolutional layers
+        # [batch_size, channels, depth, height, width]
         self.conv1 = nn.Conv3d(1, 32, kernel_size=3, stride=1, padding=1)
         self.conv2 = nn.Conv3d(32, 64, kernel_size=3, stride=1, padding=1)
         self.conv3 = nn.Conv3d(64, 128, kernel_size=3, stride=1, padding=1)
@@ -24,6 +25,7 @@ class ConvModel(nn.Module):
         self.fc2 = nn.Linear(512, 1)
         
     def forward(self, x):
+        x = x.unsqueeze(0).unsqueeze(0)
         x = F.relu(self.conv1(x))
         x = self.pool(x)
         x = F.relu(self.conv2(x))
@@ -52,6 +54,7 @@ class PSFDataset(torch.utils.data.Dataset):
     
     def __getitem__(self, idx):
         image = io.imread(self.input_files[idx])
+        image = torch.from_numpy(image) # turn numpy array into tensor
         with open(self.gt_files[idx],'r') as j:
             load_json = json.load(j)
             lls_offset = load_json["lls_defocus_offset"]
