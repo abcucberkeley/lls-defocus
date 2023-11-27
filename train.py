@@ -7,7 +7,7 @@ import os
 import skimage.io as io
 import numpy as np
 
-class ConvModel(nn.Model):
+class ConvModel(nn.Module):
     def __init__(self):
         super().__init__()
 
