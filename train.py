@@ -6,6 +6,7 @@ import json
 import os
 import skimage.io as io
 import numpy as np
+import tqdm
 
 class ConvModel(nn.Module):
     def __init__(self):
@@ -109,7 +110,7 @@ def train(input_path, n_epochs):
     loss_fn = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
-    for epoch in range(n_epochs):
+    for epoch in tqdm(range(n_epochs)):
         photons = os.listdir(input_path)
         for photon in photons:
             photons_path = os.path.join(input_path, photon)
