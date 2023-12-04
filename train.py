@@ -6,7 +6,7 @@ import json
 import os
 import skimage.io as io
 import numpy as np
-import tqdm
+from tqdm import tqdm
 
 class ConvModel(nn.Module):
     def __init__(self):
