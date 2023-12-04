@@ -126,6 +126,7 @@ def train(input_path, n_epochs):
                 # training
                 for image, lls_offset in train_dataloader:
                     lls_offset_pred = model(image)
+                    print(type(lls_offset_pred, type(lls_offset)))
                     loss = loss_fn(lls_offset_pred, lls_offset)
                     train_total_loss += loss
                     optimizer.zero_grad()
