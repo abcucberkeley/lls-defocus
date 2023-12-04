@@ -137,7 +137,7 @@ def train(input_path, n_epochs):
                 abs_difference = 0
                 for image, lls_offset in val_dataloader:
                     lls_offset_pred = model(image)
-                    loss = loss_fn(lls_offset_pred, lls_offset)
+                    loss = loss_fn(lls_offset_pred, lls_offset.type(torch.LongTensor))
                     abs_difference += abs(lls_offset_pred - lls_offset)
                     val_total_loss += loss
 
