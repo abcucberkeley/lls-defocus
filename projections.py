@@ -22,7 +22,7 @@ def create_projections(data):
 
     return xy_projection, xz_projection, yz_projection
 
-def plot_projections(xy_projection, xz_projection, yz_projection, title):
+def plot_projections(xy_projection, xz_projection, yz_projection, title, save_directory):
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
     axes[0].imshow(xy_projection, cmap='gray')
@@ -42,26 +42,31 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title):
 
     fig.suptitle(title)
 
-    plt.show()
+    #plt.show()
+    fig.savefig(save_directory)
 
 def main():
     params = parameters()
 
-    file_path = '/clusterfs/nvme/ethan/dataset/aberrations/99.tif'
-    match = re.search(r'\d+', file_path)
-    file_num = int(match.group()) - 1
+    for i in range(1,100):
+        
+        file_path = f'/clusterfs/nvme/ethan/dataset/aberrations/{i}.tif'
+        # match = re.search(r'\d+', file_path)
+        # file_num = int(match.group()) - 1
+        file_num = i - 1
 
-    title = f'{file_num+1}.tif, Amplitude: {params[file_num][1]}, LLS Offset: {params[file_num][2]}, Zernike Mode: {params[file_num][3]}'
+        title = f'{file_num+1}.tif, Amplitude: {params[file_num][1]}, LLS Offset: {params[file_num][2]}, Zernike Mode: {params[file_num][3]}'
 
-    # Read the TIF file
-    data = tiff.imread(file_path)
-    print(data.shape)
+        # Read the TIF file
+        data = tiff.imread(file_path)
+        print(data.shape)
 
-    # Create XY, XZ, and YZ projections
-    xy_projection, xz_projection, yz_projection = create_projections(data)
+        # Create XY, XZ, and YZ projections
+        xy_projection, xz_projection, yz_projection = create_projections(data)
 
-    # Plot the projections
-    plot_projections(xy_projection, xz_projection, yz_projection, title)
+        # Plot the projections
+        save_directory = "/clusterfs/nvme/ethan/dataset/plots"
+        plot_projections(xy_projection, xz_projection, yz_projection, title, save_directory)
 
 if __name__ == "__main__":
     main()
