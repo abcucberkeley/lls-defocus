@@ -48,7 +48,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 def main():
     params = parameters()
 
-    for i in range(1,100):
+    for i in range(1,2):
         
         file_path = f'/clusterfs/nvme/ethan/dataset/aberrations/{i}.tif'
         # match = re.search(r'\d+', file_path)
