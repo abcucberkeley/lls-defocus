@@ -25,6 +25,7 @@ def create_projections(data):
 def plot_projections(xy_projection, xz_projection, yz_projection, title, save_directory):
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
+    print(xy_projection.shape)
     norm_xy = Normalize(vmin=min(xy_projection), vmax=max(xy_projection))
 
     axes[0].imshow(xy_projection, cmap='gray', norm=norm_xy)
