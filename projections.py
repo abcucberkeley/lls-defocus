@@ -27,7 +27,8 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 
     print(xy_projection.shape)
     print(np.min(xy_projection), np.max(xy_projection))
-    norm_xy = Normalize(vmin=np.min(xy_projection), vmax=np.max(xy_projection))
+    # norm_xy = Normalize(vmin=np.min(xy_projection), vmax=np.max(xy_projection))
+    norm_xy = Normalize(vmin=0, vmax=1)
 
     axes[0].imshow(xy_projection, cmap='gray', norm=norm_xy)
     axes[0].set_title('XY Projection')
