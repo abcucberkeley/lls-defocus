@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import tifffile as tiff
-import re
+from matplotlib.colors import Normalize
 
 def parameters():
     params = []
@@ -25,7 +25,9 @@ def create_projections(data):
 def plot_projections(xy_projection, xz_projection, yz_projection, title, save_directory):
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    axes[0].imshow(xy_projection, cmap='gray')
+    norm_xy = Normalize(vmin=min(xy_projection), vmax=max(xy_projection))
+
+    axes[0].imshow(xy_projection, cmap='gray', norm=norm_xy)
     axes[0].set_title('XY Projection')
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
