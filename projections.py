@@ -28,7 +28,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     print(xy_projection.shape)
     print(np.min(xy_projection), np.max(xy_projection))
     # norm_xy = Normalize(vmin=np.min(xy_projection), vmax=np.max(xy_projection))
-    norm_xy = Normalize(vmin=0, vmax=1)
+    norm_xy = Normalize(vmin=xy_projection.min(), vmax=xy_projection.max())
     print("Min value:", xy_projection.min())
     print("Max value:", xy_projection.max())
 
@@ -55,7 +55,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 def main():
     params = parameters()
 
-    for i in range(1,2):
+    for i in range(43,44):
         
         file_path = f'/clusterfs/nvme/ethan/dataset/aberrations/{i}.tif'
         # match = re.search(r'\d+', file_path)
