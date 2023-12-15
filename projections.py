@@ -27,7 +27,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 
     print(xy_projection.shape)
     print(np.min(xy_projection), np.max(xy_projection))
-    norm_xy = Normalize(vmin=xy_projection.min(), vmax=xy_projection.max()+15)
+    norm_xy = Normalize(vmin=xy_projection.min(), vmax=xy_projection.max()+5)
     print("Min value:", xy_projection.min())
     print("Max value:", xy_projection.max())
 
