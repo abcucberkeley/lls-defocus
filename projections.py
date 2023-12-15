@@ -26,9 +26,9 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
     print(xy_projection.shape)
-    norm_xy = Normalize(vmin=np.min(xy_projection), vmax=np.max(xy_projection))
+    #norm_xy = Normalize(vmin=np.min(xy_projection), vmax=np.max(xy_projection))
 
-    axes[0].imshow(xy_projection, cmap='gray', norm=norm_xy)
+    axes[0].imshow(xy_projection, cmap='gray', vmin=0, vmax=1)
     axes[0].set_title('XY Projection')
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
