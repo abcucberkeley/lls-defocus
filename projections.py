@@ -42,7 +42,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 
     fig.suptitle(title)
 
-    #plt.show()
+    plt.show()
     fig.savefig(save_directory)
 
 def main():
@@ -65,7 +65,7 @@ def main():
         xy_projection, xz_projection, yz_projection = create_projections(data)
 
         # Plot the projections
-        save_directory = "/clusterfs/nvme/ethan/dataset/plots"
+        save_directory = f"/clusterfs/nvme/ethan/dataset/plots/{i}.png"
         plot_projections(xy_projection, xz_projection, yz_projection, title, save_directory)
 
 if __name__ == "__main__":
