@@ -27,7 +27,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 
     print(xy_projection.shape)
     print(np.min(xy_projection), np.max(xy_projection))
-    norm_xy = Normalize(vmin=xy_projection.min() - 10, vmax=xy_projection.max())
+    norm_xy = Normalize(vmin=xy_projection.min() - 10, vmax=xy_projection.max() + 10)
     print("Min value:", xy_projection.min())
     print("Max value:", xy_projection.max())
 
@@ -35,6 +35,8 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     axes[0].set_title('XY Projection')
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
+
+    norm_xz = Normalize(vmin=xz_projection.min() - 10, vmax=xz_projection.max() + 10)
 
     axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
