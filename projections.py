@@ -36,7 +36,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
 
-    norm_xz = Normalize(vmin=xz_projection.min() - 10, vmax=xz_projection.max() + 50)
+    norm_xz = Normalize(vmin=xz_projection.min() - 10, vmax=xz_projection.max() + 100)
 
     axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
