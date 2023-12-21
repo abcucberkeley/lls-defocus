@@ -47,9 +47,14 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
 
-    norm_xz = Normalize(vmin=xz_projection.min() - 15, vmax=xz_projection.max() - 10)
+    mean_xz = np.mean(xz_projection, axis=0)
+    sd_xz = np.std(xz_projection, axis=0)
+    rescaled_xz = (xy_projection - mean_xz) / sd_xz
 
-    axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
+    #norm_xz = Normalize(vmin=xz_projection.min() - 15, vmax=xz_projection.max() - 10)
+
+    #axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
+    axes[1].imshow(rescaled_xz, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
     axes[1].set_xlabel('X axis')
     axes[1].set_ylabel("Z axis")
