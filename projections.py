@@ -29,8 +29,8 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     print(np.min(xy_projection), np.max(xy_projection))
     norm_xy = Normalize(vmin=xy_projection.min() - 3, vmax=xy_projection.max() + 10)
 
-    mean_xy = np.mean(xy_projection)
-    sd_xy = np.std(xy_projection)
+    mean_xy = np.mean(xy_projection, axis=0)
+    sd_xy = np.std(xy_projection, axis=0)
 
     print("mean: ", mean_xy)
     print("sd: ", sd_xy)
