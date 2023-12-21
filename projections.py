@@ -53,10 +53,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
 
-    mean_xz = np.mean(xz_projection)
-    sd_xz = np.std(xz_projection)
-    rescaled_xz = (xy_projection - mean_xz) / sd_xz
-
+    normalized = np.interp(xz_projection, (np.min(xz_projection), np.max(xz_projection)), (low_range, high_range))
     #norm_xz = Normalize(vmin=xz_projection.min() - 15, vmax=xz_projection.max() - 10)
 
     axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
