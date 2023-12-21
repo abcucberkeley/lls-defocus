@@ -55,7 +55,8 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 
     normalized_xz = np.interp(xz_projection, (np.min(xz_projection), np.max(xz_projection)), (low_range, high_range))
     #norm_xz = Normalize(vmin=xz_projection.min() - 15, vmax=xz_projection.max() - 10)
-
+    print("xz")
+    print(np.min(xz_projection), np.max(xz_projection))
     #axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
     axes[1].imshow(normalized_xz, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
