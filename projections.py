@@ -53,7 +53,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
 
-    normalized_xz = np.interp(xz_projection, (np.min(xz_projection), np.max(xz_projection)), (low_range, high_range))
+    normalized_xz = np.interp(xz_projection, (np.min(xz_projection), np.max(xz_projection)), (0.8765854, 3.675833))
     #norm_xz = Normalize(vmin=xz_projection.min() - 15, vmax=xz_projection.max() - 10)
     print("xz")
     print(np.min(xz_projection), np.max(xz_projection))
@@ -76,7 +76,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 def main():
     params = parameters()
 
-    for i in range(1,2):
+    for i in range(43,44):
         
         file_path = f'/clusterfs/nvme/ethan/dataset/aberrations/{i}.tif'
         file_num = i - 1
