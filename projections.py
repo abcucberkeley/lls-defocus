@@ -38,7 +38,8 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     print("Max value:", xy_projection.max())
 
     #axes[0].imshow(xy_projection, cmap='gray', norm=norm_xy)
-    axes[0].imshow(rescaled_xy, cmap='gray')
+    #axes[0].imshow(rescaled_xy, cmap='gray')
+    axes[0].imshow(xy_projection, cmap='gray')
     axes[0].set_title('XY Projection')
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
