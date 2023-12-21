@@ -76,7 +76,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 def main():
     params = parameters()
 
-    for i in range(43,44):
+    for i in range(1,2):
         
         file_path = f'/clusterfs/nvme/ethan/dataset/aberrations/{i}.tif'
         file_num = i - 1
