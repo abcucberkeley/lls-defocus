@@ -53,10 +53,11 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
 
-    normalized = np.interp(xz_projection, (np.min(xz_projection), np.max(xz_projection)), (low_range, high_range))
+    normalized_xz = np.interp(xz_projection, (np.min(xz_projection), np.max(xz_projection)), (low_range, high_range))
     #norm_xz = Normalize(vmin=xz_projection.min() - 15, vmax=xz_projection.max() - 10)
 
-    axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
+    #axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
+    axes[1].imshow(normalized_xz, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
     axes[1].set_xlabel('X axis')
     axes[1].set_ylabel("Z axis")
