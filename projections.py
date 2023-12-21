@@ -32,6 +32,9 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     mean_xy = np.mean(xy_projection)
     sd_xy = np.std(xy_projection)
 
+    print("mean: ", mean_xy)
+    print("sd: ", sd_xy)
+
     rescaled_xy = (xy_projection - mean_xy) / sd_xy
 
     print("Min value:", xy_projection.min())
