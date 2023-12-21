@@ -31,6 +31,8 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     low_range = 0.9025277
     high_range = 4.864562
     normalized = np.interp(xy_projection, (np.min(xy_projection), np.max(xy_projection)), (low_range, high_range))
+    print(np.min(normalized), np.max(normalized))
+
 
     mean_xy = np.mean(xy_projection, axis=0)
     sd_xy = np.std(xy_projection, axis=0)
@@ -57,8 +59,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 
     #norm_xz = Normalize(vmin=xz_projection.min() - 15, vmax=xz_projection.max() - 10)
 
-    #axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
-    axes[1].imshow(rescaled_xz, cmap='gray', aspect='auto')
+    axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
     axes[1].set_xlabel('X axis')
     axes[1].set_ylabel("Z axis")
