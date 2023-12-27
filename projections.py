@@ -89,7 +89,7 @@ def main():
     #params = parameters()
     params = test_parameters()
 
-    for i in range(7,8):
+    for i in range(8,9):
         
         #file_path = f'/clusterfs/nvme/ethan/dataset/aberrations/{i}.tif'
         file_path = f'/clusterfs/nvme/ethan/dataset/test/{i}.tif'
