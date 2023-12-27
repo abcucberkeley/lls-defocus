@@ -79,9 +79,9 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, ph
 name = "1"
 fourier_emb = False
 lls_offset = 0
-for photons in [100000, 300000, 500000]:
-    for amp in [0.0, 0.1]:
-        for zernike_mode in range(3,15):
+for zernike_mode in range(3,15):
+    for photons in [100000, 300000, 500000]:
+        for amp in [0.0, 0.1]:
             if zernike_mode != 4:
                 aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, photons)
                 name = str(int(name) + 1)   
