@@ -19,7 +19,7 @@ def test_parameters():
     # [photons, amp, zernike mode]
     params = []
     for photons in [100000, 300000, 500000]:
-        for amp in [0.0,1.0]:
+        for amp in [0.0,0.1]:
             for z in range(3,15):
                 if z != 4:
                     params.append([photons, amp, z])
