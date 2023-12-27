@@ -20,7 +20,7 @@ import numpy as np
 # data_dir = "/clusterfs/nvme/ethan/dataset"
 data_dir = "/clusterfs/nvme/ethan/lls-defocus/data"
 
-def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name):
+def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, photons):
 
     # set up PSF generator with correct voxel size
     gen = SyntheticPSF(
@@ -52,11 +52,11 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name):
     # simulate a PSF
     sample = psf_dataset.simulate_psf(
         filename=name,
-        outdir=Path(f"{data_dir}/aberrations"),
+        outdir=Path(f"{data_dir}/test"),
         gen=gen,
         phi=phi,
         emb=fourier_emb,
-        photons=100000,
+        photons=photons,
         noise=True,                 # if you want to add read and shot noise to the PSF
         normalize=True,             # normalize the PSF by the max value
         lls_defocus_offset=lls_offset
@@ -64,11 +64,25 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name):
 
     assert sample.shape == gen.psf_shape
 
+# for "aberrations" directory
+# name = "1"
+# fourier_emb = False
+# photons = 100000
+# for amp in [0.0,0.5,1.0]:
+#     for lls_offset in [0.0,0.5,1.0]:
+#         for zernike_mode in range(3,15):
+#             if zernike_mode != 4:
+#                 aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, photons)
+#                 name = str(int(name) + 1)   
+
+
+# for "test" directory
 name = "1"
 fourier_emb = False
-for amp in [0.0,0.5,1.0]:
-    for lls_offset in [0.0,0.5,1.0]:
+lls_offset = 0
+for photons in [100000, 300000, 500000]:
+    for amp in [0.0, 0.1]:
         for zernike_mode in range(3,15):
             if zernike_mode != 4:
-                aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name)
+                aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, photons)
                 name = str(int(name) + 1)   
