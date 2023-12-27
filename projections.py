@@ -86,7 +86,8 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     fig.savefig(save_directory)
 
 def main():
-    params = parameters()
+    #params = parameters()
+    params = test_parameters()
 
     for i in range(43,44):
         
