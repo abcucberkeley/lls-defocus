@@ -82,14 +82,14 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 
     fig.suptitle(title)
 
-    #plt.show()
-    fig.savefig(save_directory)
+    plt.show()
+    #fig.savefig(save_directory)
 
 def main():
     #params = parameters()
     params = test_parameters()
 
-    for i in range(1,67):
+    for i in range(1,1):
         
         #file_path = f'/clusterfs/nvme/ethan/dataset/aberrations/{i}.tif'
         file_path = f'/clusterfs/nvme/ethan/dataset/test/{i}.tif'
