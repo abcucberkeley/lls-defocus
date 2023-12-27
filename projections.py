@@ -82,7 +82,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 
     fig.suptitle(title)
 
-    plt.show()
+    #plt.show()
     fig.savefig(save_directory)
 
 def main():
