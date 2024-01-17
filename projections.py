@@ -38,50 +38,27 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
     norm_xy = Normalize(vmax=np.percentile(xy_projection,99))
+    norm_xz = Normalize(vmax=np.percentile(xz_projection,99))
+    norm_yz = Normalize(vmax=np.percentile(yz_projection,99))
+    
     normalized_xy = norm_xy(xy_projection)
+    normalized_xz = norm_xz(xz_projection)
+    normalized_yz = norm_yz(yz_projection)
 
-    print(type(normalized_xy))
-
-    # print(xy_projection.shape)
-    # print(np.min(xy_projection), np.max(xy_projection))
-    # norm_xy = Normalize(vmin=xy_projection.min() - 3, vmax=xy_projection.max() + 10)
-    # low_range = 0.9025277
-    # high_range = 4.864562
-    # normalized = np.interp(xy_projection, (np.min(xy_projection), np.max(xy_projection)), (low_range, high_range))
-    # print(np.min(normalized), np.max(normalized))
-
-
-    # mean_xy = np.mean(xy_projection, axis=0)
-    # sd_xy = np.std(xy_projection, axis=0)
-
-    # print("mean: ", mean_xy)
-    # print("sd: ", sd_xy)
-
-    # rescaled_xy = (xy_projection - mean_xy) / sd_xy
-
-    # print("Min value:", xy_projection.min())
-    # print("Max value:", xy_projection.max())
-
-    #axes[0].imshow(xy_projection, cmap='gray', norm=norm_xy)
-    #axes[0].imshow(rescaled_xy, cmap='gray')
-    # axes[0].imshow(normalized, cmap='gray', aspect='auto')
-    axes[0].imshow(normalized_xy, cmap='gray')
-    # axes[0].imshow(xy_projection, cmap='gray')
+    axes[0].imshow(xy_projection, cmap='gray', aspect='auto')
+    #axes[0].imshow(normalized_xy, cmap='gray')
     axes[0].set_title('XY Projection')
     axes[0].set_xlabel('X axis')
     axes[0].set_ylabel("Y axis")
 
-    #normalized_xz = np.interp(xz_projection, (np.min(xz_projection), np.max(xz_projection)), (0.8765854, 3.675833))
-    #norm_xz = Normalize(vmin=xz_projection.min() - 15, vmax=xz_projection.max() - 10)
-    # print("xz")
-    # print(np.min(xz_projection), np.max(xz_projection))
     axes[1].imshow(xz_projection, cmap='gray', aspect='auto')
     #axes[1].imshow(normalized_xz, cmap='gray', aspect='auto')
     axes[1].set_title('XZ Projection')
     axes[1].set_xlabel('X axis')
     axes[1].set_ylabel("Z axis")
-
-    axes[2].imshow(yz_projection.T, cmap='gray', aspect='auto')
+    
+    axes[1].imshow(yz_projection, cmap='gray', aspect='auto')
+    #axes[2].imshow(normalized_yz.T, cmap='gray', aspect='auto')
     axes[2].set_title('YZ Projection')
     axes[2].set_xlabel('Z axis')
     axes[2].set_ylabel("Y axis")
