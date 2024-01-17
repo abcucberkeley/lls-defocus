@@ -57,7 +57,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     axes[1].set_xlabel('X axis')
     axes[1].set_ylabel("Z axis")
     
-    axes[1].imshow(yz_projection, cmap='gray', aspect='auto')
+    axes[2].imshow(yz_projection, cmap='gray', aspect='auto')
     #axes[2].imshow(normalized_yz.T, cmap='gray', aspect='auto')
     axes[2].set_title('YZ Projection')
     axes[2].set_xlabel('Z axis')
