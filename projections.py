@@ -38,8 +38,9 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
     norm_xy = Normalize(vmax=np.percentile(xy_projection,99))
+    normalized_xy = norm_xy(xy_projection)
 
-    print(type(norm_xy))
+    print(type(normalized_xy))
 
     # print(xy_projection.shape)
     # print(np.min(xy_projection), np.max(xy_projection))
@@ -64,7 +65,7 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
     #axes[0].imshow(xy_projection, cmap='gray', norm=norm_xy)
     #axes[0].imshow(rescaled_xy, cmap='gray')
     # axes[0].imshow(normalized, cmap='gray', aspect='auto')
-    axes[0].imshow(norm_xy, cmap='gray')
+    axes[0].imshow(normalized_xy, cmap='gray')
     # axes[0].imshow(xy_projection, cmap='gray')
     axes[0].set_title('XY Projection')
     axes[0].set_xlabel('X axis')
