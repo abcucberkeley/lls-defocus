@@ -94,8 +94,8 @@ def main():
 
     for i in range(8,9):
         
-        #file_path = f'/clusterfs/nvme/ethan/dataset/aberrations/{i}.tif'
-        file_path = f'/clusterfs/nvme/ethan/dataset/test/{i}.tif'
+        file_path = f'/clusterfs/nvme/ethan/dataset/aberrations/{i}.tif'
+        # file_path = f'/clusterfs/nvme/ethan/dataset/test/{i}.tif'
         file_num = i - 1
 
         #title = f'{file_num+1}.tif, Amplitude: {params[file_num][1]}, LLS Offset: {params[file_num][2]}, Zernike Mode: {params[file_num][3]}'
