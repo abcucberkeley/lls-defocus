@@ -39,6 +39,8 @@ def plot_projections(xy_projection, xz_projection, yz_projection, title, save_di
 
     norm_xy = Normalize(vmax=np.percentile(xy_projection,99))
 
+    print(type(norm_xy))
+
     # print(xy_projection.shape)
     # print(np.min(xy_projection), np.max(xy_projection))
     # norm_xy = Normalize(vmin=xy_projection.min() - 3, vmax=xy_projection.max() + 10)
