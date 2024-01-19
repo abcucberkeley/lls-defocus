@@ -127,6 +127,7 @@ def train(input_path, n_epochs):
                     
                     print("pred: ", lls_offset_pred) # see if pred is negative?
                     # print(lls_offset_pred.dtype, lls_offset.dtype)
+                    print(lls_offset)
                     print("gt", lls_offset.type(torch.LongTensor))
                     loss = loss_fn(lls_offset_pred, lls_offset.type(torch.LongTensor))
                     print("Loss: ", loss)
