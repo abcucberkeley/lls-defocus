@@ -123,7 +123,7 @@ def train(input_path, n_epochs):
                 
                 # training
                 for image, lls_offset in train_dataloader:
-                    lls_offset_pred = model(image)
+                    lls_offset_pred = model(image).view(-1)
                     
                     print("pred: ", lls_offset_pred) # see if pred is negative?
                     # print(lls_offset_pred.dtype, lls_offset.dtype)
