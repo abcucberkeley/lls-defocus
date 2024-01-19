@@ -131,14 +131,12 @@ def train(input_path, n_epochs):
                     optimizer.step()
                     
                 # validation
-                abs_difference = 0
                 for image, lls_offset in val_dataloader:
                     lls_offset_pred = model(image).view(-1).to(torch.float64)
                     loss = loss_fn(lls_offset_pred, lls_offset)
-                    abs_difference += abs(lls_offset_pred.item() - lls_offset.item())
                     val_total_loss += loss
 
-                print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}, Model Accuracy: {abs_difference / len(val_dataloader)}')
+                print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}')
 
 if __name__ == '__main__':
     input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
