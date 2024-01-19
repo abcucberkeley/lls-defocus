@@ -97,3 +97,4 @@ for zernike_mode in range(3,15):
         if zernike_mode != 4:
             aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, photons, save_dir)
             name = str(int(name) + 1)
+            print("hello")
