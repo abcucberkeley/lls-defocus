@@ -24,7 +24,6 @@ class ConvModel(nn.Module):
         # fully connected layers
         self.fc1 = nn.Linear(128 * 8 * 8 * 8, 512)
         self.fc2 = nn.Linear(512, 1)
-        self.double()
         
     def forward(self, x):
         # x = x.unsqueeze(0).unsqueeze(0) # should be (batch size, 1, 64, 64, 64)
