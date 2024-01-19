@@ -93,8 +93,7 @@ fourier_emb = False
 photons=100000
 save_dir = "no_amplitude"
 for zernike_mode in range(3,15):
-    for lls_offset in [0.0,0.5,1.0]:
+    for lls_offset in np.linspace(-2, 2, 41):
         if zernike_mode != 4:
-            aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, photons, save_dir)
+            aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir)
             name = str(int(name) + 1)
-            print("hello")
