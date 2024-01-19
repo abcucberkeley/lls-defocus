@@ -124,11 +124,11 @@ def train(input_path, n_epochs):
                 # training
                 for image, lls_offset in train_dataloader:
                     lls_offset_pred = model(image)
-                    print("hello")
+                    
                     print("pred: ", lls_offset_pred) # see if pred is negative?
-                    print(lls_offset_pred.dtype, lls_offset.dtype)
+                    # print(lls_offset_pred.dtype, lls_offset.dtype)
                     loss = loss_fn(lls_offset_pred, lls_offset.type(torch.LongTensor))
-                    print("bye")
+                    print("Loss: ", loss)
                     train_total_loss += loss
                     optimizer.zero_grad()
                     loss.backward()
