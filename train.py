@@ -133,8 +133,10 @@ def train(input_path, n_epochs):
                 # validation
                 abs_difference = 0
                 for image, lls_offset in val_dataloader:
-                    lls_offset_pred = model(image)
+                    lls_offset_pred = model(image).view(-1).to(torch.float64)
                     loss = loss_fn(lls_offset_pred, lls_offset)
+                    print(lls_offset_pred[0])
+                    print(lls_offset[0])
                     abs_difference += abs(lls_offset_pred[0] - lls_offset[0])
                     val_total_loss += loss
 
