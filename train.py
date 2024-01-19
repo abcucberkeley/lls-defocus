@@ -105,7 +105,7 @@ def dataloader(path, batch_size, val_split):
 
 def train(input_path, n_epochs):
     model = ConvModel()
-    loss_fn = nn.CrossEntropyLoss()
+    loss_fn = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
     for epoch in tqdm(range(n_epochs)):
