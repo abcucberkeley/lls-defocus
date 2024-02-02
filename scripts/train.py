@@ -144,6 +144,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
 
         # write to csv file
         with open(f'../experiments/{experiment_name}.csv', 'w', newline='') as f:
+            writer = csv.writer(f)
             writer.writerow([train_total_loss / len(train_dataloader), val_total_loss / len(val_dataloader)])
         
         # update loss graph
