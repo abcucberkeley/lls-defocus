@@ -23,5 +23,5 @@ def plot_loss(experiment_name):
     plt.xlabel("Epochs")
     plt.ylabel("Loss")
     plt.legend(loc="best")
-    plt.show()
+    # plt.show()
     plt.savefig(f'../experiments/{experiment_name}.png')
