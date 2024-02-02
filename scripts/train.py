@@ -192,4 +192,4 @@ if __name__ == '__main__':
     model_path = "/clusterfs/nvme/ethan/lls-defocus/models"
     n_epochs = 100
     # train(input_path, n_epochs)
-    train_no_amp(input_path, n_epochs, model_path)
+    train_no_amp(input_path, n_epochs, model_path, experiment_name)
