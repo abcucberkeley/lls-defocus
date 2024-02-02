@@ -83,7 +83,7 @@ def dataloader(path, batch_size, val_split):
 
     # training set
     train_idx = idx[:num_train]
-    print(train_idx)
+    # print(train_idx)
     train_input_filenames = input_files[train_idx]
     train_gt_filenames = gt_files[train_idx]
     print('Training size: ', len(train_input_filenames))
