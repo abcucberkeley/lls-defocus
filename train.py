@@ -101,6 +101,40 @@ def dataloader(path, batch_size, val_split):
     val_dataloader = torch.utils.data.DataLoader(val_data, batch_size=batch_size, shuffle=True)
 
     return train_dataloader, val_dataloader
+
+
+def train_no_amp(input_path, n_epochs, model_path):
+    model = ConvModel()
+    loss_fn = nn.MSELoss()
+    optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+
+    for epoch in tqdm(range(n_epochs)):
+        train_total_loss = 0
+        val_total_loss = 0
+        train_dataloader, val_dataloader = dataloader(input_path, batch_size=1, val_split=0.8)
+
+        # training
+        for image, lls_offset in train_dataloader:
+            lls_offset_pred = model(image).view(-1).to(torch.float64)
+            loss = loss_fn(lls_offset_pred, lls_offset)
+            train_total_loss += loss
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+        
+        # validation
+        for image, lls_offset in val_dataloader:
+            lls_offset_pred = model(image).view(-1).to(torch.float64)
+            loss = loss_fn(lls_offset_pred, lls_offset)
+            val_total_loss += loss
+
+        print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}')
+        
+        # save model at every 1000th epoch
+        if epoch % 1000 == 0 and epoch != 0:
+            torch.save(model.state_dict(), model_path)
+
+
     
 
 def train(input_path, n_epochs):
@@ -140,22 +174,7 @@ def train(input_path, n_epochs):
 
 if __name__ == '__main__':
     input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
-    
-    # vol_path = "/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed/photons_100001-150000/amp_p0-p0/defocus_0p0-0p1/33.tif"
-    # vol = io.imread(vol_path)
-    # vol = torch.from_numpy(vol)
-
-    # print(vol.shape) # (64, 64, 64)
-    # model = ConvModel()
-    # lls_offset_pred = model(vol)
-    # print(lls_offset_pred)
-
-    # path = "/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed/photons_100001-150000/amp_p0-p0/defocus_0p0-0p1/"
-    # train_dataloader, val_dataloader = dataloader(path, batch_size=1, val_split=0.8)
-    # for image, lls_offset in train_dataloader:
-    #     print("Image size: ", image.shape)
-    #     print("Offset: , ", lls_offset) 
-    #     break
+    model_path = "/"
 
     n_epochs = 100
     train(input_path, n_epochs)
