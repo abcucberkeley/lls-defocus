@@ -173,8 +173,9 @@ def train(input_path, n_epochs):
                 print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}')
 
 if __name__ == '__main__':
-    input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
-    model_path = "/"
-
+    #input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
+    input_path = '/clusterfs/nvme/ethan/dataset/no_amplitude'
+    model_path = "/clusterfs/nvme/ethan/lls-defocus/models"
     n_epochs = 100
-    train(input_path, n_epochs)
+    # train(input_path, n_epochs)
+    train_no_amp(input_path, n_epochs, model_path)
