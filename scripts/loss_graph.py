@@ -25,5 +25,3 @@ def plot_loss(experiment_name):
     plt.legend(loc="best")
     plt.show()
     plt.savefig(f'../experiments/{experiment_name}.png')
-
-plot_loss("test-001")
