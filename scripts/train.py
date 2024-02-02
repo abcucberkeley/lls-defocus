@@ -147,7 +147,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
             writer.writerow([train_total_loss / len(train_dataloader), val_total_loss / len(val_dataloader)])
         
         # update loss graph
-        loss_graph(experiment_name)
+        plot_loss(experiment_name)
     
 
 def train(input_path, n_epochs):
