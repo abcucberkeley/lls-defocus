@@ -139,8 +139,8 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
         print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}')
         
         # save model at every 1000th epoch
-        if epoch % 10 == 0 and epoch != 0:
-            torch.save(model.state_dict(), model_path)
+        #if epoch % 10 == 0 and epoch != 0:
+            #torch.save(model.state_dict(), model_path)
 
         # write to csv file
         with open(f'../experiments/{experiment_name}.csv', 'a', newline='') as f: # i changed from w to a, to append just check again
