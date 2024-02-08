@@ -1,7 +1,7 @@
 import csv
 from matplotlib.pylab import plt
 
-def plot_loss(experiment_name):
+def plot_loss(experiment_name, epoch):
     epochs = []
     train_loss = []
     val_loss = []
@@ -23,5 +23,6 @@ def plot_loss(experiment_name):
     plt.xlabel("Epochs")
     plt.ylabel("Loss")
     plt.legend(loc="best")
-    # plt.show()
+    if epoch % 5 == 0:
+        plt.show()
     plt.savefig(f'../experiments/{experiment_name}.png')

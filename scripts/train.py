@@ -143,12 +143,12 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
             torch.save(model.state_dict(), model_path)
 
         # write to csv file
-        with open(f'../experiments/{experiment_name}.csv', 'w', newline='') as f:
+        with open(f'../experiments/{experiment_name}.csv', 'a', newline='') as f: # i changed from w to a, to append just check again
             writer = csv.writer(f)
-            writer.writerow([train_total_loss / len(train_dataloader), val_total_loss / len(val_dataloader)])
+            writer.writerow([(train_total_loss / len(train_dataloader)).numpy()[0], (val_total_loss / len(val_dataloader)).numpy()[0]])
         
         # update loss graph
-        plot_loss(experiment_name)
+        plot_loss(experiment_name, epoch)
     
 
 def train(input_path, n_epochs):
