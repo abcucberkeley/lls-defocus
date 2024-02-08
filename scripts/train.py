@@ -145,8 +145,8 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
         # write to csv file
         with open(f'../experiments/{experiment_name}.csv', 'a', newline='') as f: # i changed from w to a, to append just check again
             writer = csv.writer(f)
-            train_loss = train_total_loss / len(train_dataloader).item()
-            val_loss = val_total_loss / len(val_dataloader).item()
+            train_loss = (train_total_loss / len(train_dataloader)).item()
+            val_loss = (val_total_loss / len(val_dataloader)).item()
             print(train_loss)
             print(val_loss)
             writer.writerow([train_loss, val_loss])
