@@ -14,9 +14,6 @@ def plot_loss(experiment_name, epoch):
             train_loss.append(float(row[0]))
             val_loss.append(float(row[1]))
     
-    print(epochs)
-    print(train_loss)
-    print(val_loss)
     plt.plot(epochs, train_loss, label="Training Loss")
     plt.plot(epochs, val_loss, label="Validation Loss")
     plt.title("Training and Validation Loss")
