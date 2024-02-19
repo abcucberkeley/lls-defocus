@@ -9,6 +9,7 @@ import numpy as np
 from tqdm import tqdm
 import csv
 from loss_graph import plot_loss
+import cli
 
 class ConvModel(nn.Module):
     def __init__(self):
@@ -140,6 +141,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
         
         # save model at every 1000th epoch
         if epoch % 2 == 0 and epoch != 0:
+            print("saving model")
             torch.save(model.state_dict(), model_path)
 
         # write to csv file
@@ -188,7 +190,22 @@ def train(input_path, n_epochs):
 
                 print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}')
 
+def parse_args(args):
+    parser = cli.argparser()
+    parser.add_argument("--input_path", type=str, default='1')
+    parser.add_argument("--n_epochs", type=int, default='1')
+    parser.add_argument("--model_path", type=str, default='1')
+    parser.add_argument("--experiment_name", type=str, default='1')
+    return parser.parse_args(args)
+
+def main():
+    args = parse_args(args)
+    train_no_amp(args.input_path, args.n_epochs, args.model_path, args.experiment_name)
+    pass
+    
+
 if __name__ == '__main__':
+    # main()
     #input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
     #input_path = '/clusterfs/nvme/ethan/dataset/no_amplitude'
     experiment_name = 'test-001'

@@ -20,6 +20,6 @@ def plot_loss(experiment_name, epoch):
     plt.xlabel("Epochs")
     plt.ylabel("Loss")
     plt.legend(loc="best")
-    if epoch % 5 == 0:
+    if epoch % 10 == 0 and epoch != 0:
         plt.show()
     plt.savefig(f'../experiments/{experiment_name}.png')
