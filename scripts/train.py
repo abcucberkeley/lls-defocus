@@ -201,7 +201,6 @@ def parse_args(args):
 def main():
     args = parse_args(args)
     train_no_amp(args.input_path, args.n_epochs, args.model_path, args.experiment_name)
-    pass
     
 
 if __name__ == '__main__':
