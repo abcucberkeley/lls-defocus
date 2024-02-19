@@ -205,12 +205,12 @@ def main():
     
 
 if __name__ == '__main__':
-    # main()
+    main()
     #input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
     #input_path = '/clusterfs/nvme/ethan/dataset/no_amplitude'
-    experiment_name = 'test-001'
-    input_path = '/clusterfs/nvme/ethan/dataset/no_amplitude_large'
-    model_path = "/clusterfs/nvme/ethan/lls-defocus/models"
-    n_epochs = 1000
+    # experiment_name = 'test-001'
+    # input_path = '/clusterfs/nvme/ethan/dataset/no_amplitude_large'
+    # model_path = "/clusterfs/nvme/ethan/lls-defocus/models"
+    # n_epochs = 1000
     # train(input_path, n_epochs)
-    train_no_amp(input_path, n_epochs, model_path, experiment_name)
+    # train_no_amp(input_path, n_epochs, model_path, experiment_name)

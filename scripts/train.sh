@@ -7,6 +7,11 @@ CPUS=1
 MEM='20G'
 JOB = 'test-001'
 
+input_path = '/clusterfs/nvme/ethan/dataset/no_amplitude_large'
+n_epochs = 1000
+model_path = "/clusterfs/nvme/ethan/lls-defocus/models"
+experiment_name = 'test-001'
+
 if [ $HANDLER = 'slurm' ];then
     while [ $(squeue -u $USER -h -t pending -r | wc -l) -gt 300 ]
     do
