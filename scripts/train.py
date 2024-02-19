@@ -139,8 +139,8 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
         print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}')
         
         # save model at every 1000th epoch
-        #if epoch % 10 == 0 and epoch != 0:
-            #torch.save(model.state_dict(), model_path)
+        if epoch % 2 == 0 and epoch != 0:
+            torch.save(model.state_dict(), model_path)
 
         # write to csv file
         with open(f'../experiments/{experiment_name}.csv', 'a', newline='') as f: # i changed from w to a, to append just check again
@@ -190,9 +190,10 @@ def train(input_path, n_epochs):
 
 if __name__ == '__main__':
     #input_path="/clusterfs/nvme/ethan/dataset/lls_defocus_only/YuMB_lambda510/z200-y108-x108/z64-y64-x64/z15/mixed"
+    #input_path = '/clusterfs/nvme/ethan/dataset/no_amplitude'
     experiment_name = 'test-001'
-    input_path = '/clusterfs/nvme/ethan/dataset/no_amplitude'
+    input_path = '/clusterfs/nvme/ethan/dataset/no_amplitude_large'
     model_path = "/clusterfs/nvme/ethan/lls-defocus/models"
-    n_epochs = 100
+    n_epochs = 1000
     # train(input_path, n_epochs)
     train_no_amp(input_path, n_epochs, model_path, experiment_name)
