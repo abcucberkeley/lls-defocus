@@ -1,7 +1,8 @@
 #!/bin/bash
 
 HANDLER=slurm
-ENV=~/anaconda3/envs/ml/bin/python
+#ENV=~/anaconda3/envs/ml/bin/python
+ENV=python
 TIMELIMIT='24:00:00'
 CPUS=1
 MEM='20G'
