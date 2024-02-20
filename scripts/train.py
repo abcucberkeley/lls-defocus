@@ -141,7 +141,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
             loss = loss_fn(lls_offset_pred, lls_offset)
             val_total_loss += loss
 
-        print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}')
+        print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}', flush=True)
         
         # save model at every 1000th epoch
         # if epoch % 2 == 0 and epoch != 0:
