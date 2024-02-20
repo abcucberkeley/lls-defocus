@@ -198,7 +198,7 @@ def parse_args(args):
     parser.add_argument("--experiment_name", type=str, default='1')
     return parser.parse_args(args)
 
-def main():
+def main(args=None):
     args = parse_args(args)
     train_no_amp(args.input_path, args.n_epochs, args.model_path, args.experiment_name)
     
