@@ -204,7 +204,7 @@ def main(args=None):
     print(args.n_epochs)
     print(args.model_path)
     print(args.experiment_name)
-    #train_no_amp(args.input_path, args.n_epochs, args.model_path, args.experiment_name)
+    train_no_amp(args.input_path, args.n_epochs, args.model_path, args.experiment_name)
     
 
 if __name__ == '__main__':
