@@ -5,7 +5,7 @@ HANDLER=slurm
 ENV=python
 TIMELIMIT='24:00:00'
 CPUS=1
-MEM='20G'
+MEM='128G'
 JOB='test-001'
 
 input_path='/clusterfs/nvme/ethan/dataset/no_amplitude_large'
