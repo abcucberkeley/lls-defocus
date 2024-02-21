@@ -26,7 +26,6 @@ if [ $HANDLER = 'slurm' ];then
     j="${j} --experiment_name ${experiment_name}"
 
     task="/usr/bin/sbatch"
-    #task="${task} --qos=abc_normal --nice=1111111111"
     task="${task} --qos=abc_normal"
     task="${task} --partition=abc"
     task="${task} --gres=gpu:1"

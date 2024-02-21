@@ -122,29 +122,21 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
         val_total_loss = 0
         train_dataloader, val_dataloader = dataloader(input_path, batch_size=1, val_split=0.8)
 
-        print('passed dataloader')
+        # print('passed dataloader')
 
         # print letters after each line and see which part is taking the longest
 
         # training
         for image, lls_offset in train_dataloader:
-            print('training')
             lls_offset_pred = model(image).view(-1).to(torch.float64)
-            print('a')
             loss = loss_fn(lls_offset_pred, lls_offset)
-            print('b')
             train_total_loss += loss
-            print('c')
             optimizer.zero_grad()
-            print('d')
             loss.backward()
-            print('e')
             optimizer.step()
-            print('f')
         
         # validation
         for image, lls_offset in val_dataloader:
-            print('validation')
             lls_offset_pred = model(image).view(-1).to(torch.float64)
             loss = loss_fn(lls_offset_pred, lls_offset)
             val_total_loss += loss
