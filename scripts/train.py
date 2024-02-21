@@ -92,7 +92,8 @@ def dataloader(path, batch_size, val_split):
     print('Training size: ', len(train_input_filenames))
 
     train_data = PSFDataset(train_input_filenames, train_gt_filenames)
-    train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
+    #train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
+    train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size)
 
     # validation set
     val_idx = idx[num_train:]
@@ -101,7 +102,8 @@ def dataloader(path, batch_size, val_split):
     print('Validation size: ', len(val_input_filenames))
 
     val_data = PSFDataset(val_input_filenames, val_gt_filenames)
-    val_dataloader = torch.utils.data.DataLoader(val_data, batch_size=batch_size, shuffle=True)
+    #val_dataloader = torch.utils.data.DataLoader(val_data, batch_size=batch_size, shuffle=True)
+    val_dataloader = torch.utils.data.DataLoader(val_data, batch_size=batch_size)
 
     return train_dataloader, val_dataloader
 
