@@ -68,6 +68,7 @@ class PSFDataset(torch.utils.data.Dataset):
 # this should only return the dataloader for ONLY ONE defocus_xxx_xxx
 def dataloader(path, batch_size, val_split):
     # path = the path inside one defocus_xxx_xxx
+    print('a')
     data = sorted(os.listdir(path))
     input_files = []
     gt_files = []
@@ -76,34 +77,42 @@ def dataloader(path, batch_size, val_split):
             input_files.append(os.path.join(path, file))
         else:
             gt_files.append(os.path.join(path, file))
+    print('b')
     input_files = np.array(input_files)
     gt_files = np.array(gt_files)
+    print('c')
 
     num_data = len(input_files)
     idx = np.arange(num_data)
     np.random.shuffle(idx)
     num_train = int(num_data * val_split)
-
+    print('d')
     # training set
     train_idx = idx[:num_train]
+    print('e')
     # print(train_idx)
     train_input_filenames = input_files[train_idx]
+    print('f')
     train_gt_filenames = gt_files[train_idx]
+    print('g')
     print('Training size: ', len(train_input_filenames))
 
     train_data = PSFDataset(train_input_filenames, train_gt_filenames)
     #train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
     train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size)
-
+    print('h')
     # validation set
     val_idx = idx[num_train:]
     val_input_filenames = input_files[val_idx]
     val_gt_filenames = gt_files[val_idx]
+    print('i')
     print('Validation size: ', len(val_input_filenames))
 
     val_data = PSFDataset(val_input_filenames, val_gt_filenames)
     #val_dataloader = torch.utils.data.DataLoader(val_data, batch_size=batch_size, shuffle=True)
     val_dataloader = torch.utils.data.DataLoader(val_data, batch_size=batch_size)
+
+    print('j')
 
     return train_dataloader, val_dataloader
 
