@@ -6,12 +6,12 @@ ENV=python
 TIMELIMIT='24:00:00'
 CPUS=1
 MEM='128G'
-JOB='test-001'
+JOB='test-002'
 
 input_path='/clusterfs/nvme/ethan/dataset/no_amplitude_large'
 n_epochs=1000
 model_path="/clusterfs/nvme/ethan/lls-defocus/models"
-experiment_name='test-001'
+experiment_name='test-002'
 
 if [ $HANDLER = 'slurm' ];then
     while [ $(squeue -u $USER -h -t pending -r | wc -l) -gt 300 ]
