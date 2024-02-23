@@ -10,6 +10,8 @@ from tqdm import tqdm
 import csv
 from loss_graph import plot_loss
 import cli
+from datetime import datetime
+now = datetime.now()
 
 class ConvModel(nn.Module):
     def __init__(self):
@@ -68,7 +70,7 @@ class PSFDataset(torch.utils.data.Dataset):
 # this should only return the dataloader for ONLY ONE defocus_xxx_xxx
 def dataloader(path, batch_size, val_split):
     # path = the path inside one defocus_xxx_xxx
-    print('a')
+    print("A Current Time =", now.strftime("%H:%M:%S"))
     data = sorted(os.listdir(path))
     input_files = []
     gt_files = []
@@ -77,35 +79,35 @@ def dataloader(path, batch_size, val_split):
             input_files.append(os.path.join(path, file))
         else:
             gt_files.append(os.path.join(path, file))
-    print('b')
+    print("B Current Time =", now.strftime("%H:%M:%S"))
     input_files = np.array(input_files)
     gt_files = np.array(gt_files)
-    print('c')
+    print("C Current Time =", now.strftime("%H:%M:%S"))
 
     num_data = len(input_files)
     idx = np.arange(num_data)
     np.random.shuffle(idx)
     num_train = int(num_data * val_split)
-    print('d')
+    print("D Current Time =", now.strftime("%H:%M:%S"))
     # training set
     train_idx = idx[:num_train]
-    print('e')
+    print("E Current Time =", now.strftime("%H:%M:%S"))
     # print(train_idx)
     train_input_filenames = input_files[train_idx]
-    print('f')
+    print("F Current Time =", now.strftime("%H:%M:%S"))
     train_gt_filenames = gt_files[train_idx]
-    print('g')
+    print("G Current Time =", now.strftime("%H:%M:%S"))
     print('Training size: ', len(train_input_filenames))
 
     train_data = PSFDataset(train_input_filenames, train_gt_filenames)
     #train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
     train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size)
-    print('h')
+    print("H Current Time =", now.strftime("%H:%M:%S"))
     # validation set
     val_idx = idx[num_train:]
     val_input_filenames = input_files[val_idx]
     val_gt_filenames = gt_files[val_idx]
-    print('i')
+    print("I Current Time =", now.strftime("%H:%M:%S"))
     print('Validation size: ', len(val_input_filenames))
 
     val_data = PSFDataset(val_input_filenames, val_gt_filenames)
