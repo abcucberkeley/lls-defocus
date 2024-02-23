@@ -13,10 +13,10 @@ model_path="/clusterfs/nvme/ethan/lls-defocus/models"
 experiment_name='test-002'
 
 if [ $HANDLER = 'slurm' ];then
-    while [ $(squeue -u $USER -h -t pending -r | wc -l) -gt 300 ]
-    do
-        sleep 10s
-    done
+    # while [ $(squeue -u $USER -h -t pending -r | wc -l) -gt 300 ]
+    # do
+    #     sleep 10s
+    # done
 
     j="${ENV} train.py"
     j="${j} --input_path ${input_path}"
