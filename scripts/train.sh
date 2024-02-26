@@ -10,7 +10,7 @@ JOB='test-003'
 input_path='/clusterfs/nvme/ethan/dataset/no_amplitude_large'
 n_epochs=1000
 model_path="/clusterfs/nvme/ethan/lls-defocus/models"
-experiment_name='test-002'
+experiment_name='test-003'
 
 if [ $HANDLER = 'slurm' ];then
     # while [ $(squeue -u $USER -h -t pending -r | wc -l) -gt 300 ]
