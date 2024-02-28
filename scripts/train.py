@@ -41,8 +41,8 @@ class ConvModel(nn.Module):
         self.fc2 = nn.Linear(512, 1)
         
     def forward(self, x):
-        x = x.unsqueeze(0).unsqueeze(0) # should be (batch size, 1, 64, 64, 64)
-        #x = x.unsqueeze(0)
+        #x = x.unsqueeze(0).unsqueeze(0) # should be (batch size, 1, 64, 64, 64)
+        x = x.unsqueeze(0)
 
         x = F.relu(self.conv1(x))
         x = self.pool(x)
