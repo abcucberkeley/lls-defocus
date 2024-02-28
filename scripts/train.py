@@ -29,7 +29,7 @@ class ConvModel(nn.Module):
 
         # convolutional layers
         # [batch_size, channels, depth, height, width]
-        self.conv1 = nn.Conv3d(20, 32, kernel_size=3, stride=1, padding=1)
+        self.conv1 = nn.Conv3d(1, 32, kernel_size=3, stride=1, padding=1)
         self.conv2 = nn.Conv3d(32, 64, kernel_size=3, stride=1, padding=1)
         self.conv3 = nn.Conv3d(64, 128, kernel_size=3, stride=1, padding=1)
 
@@ -145,8 +145,6 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
         # training
         for image, lls_offset in train_dataloader:
             lls_offset_pred = model(image).view(-1).to(torch.float64).to(device)
-            print(type(lls_offset_pred))
-            print(type(lls_offset))
             loss = loss_fn(lls_offset_pred, lls_offset.to(device))
             train_total_loss += loss
             optimizer.zero_grad()
@@ -158,7 +156,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
             model.eval()
             for image, lls_offset in val_dataloader:
                 lls_offset_pred = model(image).view(-1).to(torch.float64).to(device)
-                loss = loss_fn(lls_offset_pred, lls_offset).to(device)# hm lowkey am not sure if i need to do .to(device) for offset
+                loss = loss_fn(lls_offset_pred, lls_offset.to(device))
                 val_total_loss += loss
 
         print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}', flush=True)
