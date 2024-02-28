@@ -147,7 +147,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
             lls_offset_pred = model(image).view(-1).to(torch.float64).to(device)
             print(type(lls_offset_pred))
             print(type(lls_offset))
-            loss = loss_fn(lls_offset_pred, lls_offset)
+            loss = loss_fn(lls_offset_pred, lls_offset.to(device))
             train_total_loss += loss
             optimizer.zero_grad()
             loss.backward()
