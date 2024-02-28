@@ -5,7 +5,7 @@ ENV=python
 TIMELIMIT='24:00:00'
 CPUS=1
 MEM='128G'
-JOB='test-003'
+JOB='test-004'
 
 input_path='/clusterfs/nvme/ethan/dataset/no_amplitude_large'
 n_epochs=1000

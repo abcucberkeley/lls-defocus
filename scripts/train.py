@@ -10,12 +10,22 @@ from tqdm import tqdm
 import csv
 from loss_graph import plot_loss
 import cli
-from datetime import datetime
-now = datetime.now()
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# separate dataloader, conv model, etc into different files later on
+# device = torch.device() 
+# watch nvidia-smi to check that ur gpu is being used or not
 
 class ConvModel(nn.Module):
     def __init__(self):
         super().__init__()
+
+        # gelu instead of relu, less rigid activation func than relu
+
+        # resnet??? suggested by sayan
+
+        # batchnorm3d - ensures that model doesn't depend on features with higher values 
+        #relu
+        # dropout - ensures that no one node will contribute to  uch. tries to ensure convergence to reach global min
 
         # convolutional layers
         # [batch_size, channels, depth, height, width]
@@ -45,6 +55,8 @@ class ConvModel(nn.Module):
         
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
+
+        # incorporate batch size to make it quicker
 
         return x
     
@@ -92,8 +104,8 @@ def dataloader(path, batch_size, val_split):
     print('Training size: ', len(train_input_filenames))
 
     train_data = PSFDataset(train_input_filenames, train_gt_filenames)
-    #train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
-    train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size)
+    train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
+
     # validation set
     val_idx = idx[num_train:]
     val_input_filenames = input_files[val_idx]
@@ -101,16 +113,24 @@ def dataloader(path, batch_size, val_split):
     print('Validation size: ', len(val_input_filenames))
 
     val_data = PSFDataset(val_input_filenames, val_gt_filenames)
-    #val_dataloader = torch.utils.data.DataLoader(val_data, batch_size=batch_size, shuffle=True)
-    val_dataloader = torch.utils.data.DataLoader(val_data, batch_size=batch_size)
+    val_dataloader = torch.utils.data.DataLoader(val_data, batch_size=batch_size, shuffle=True)
 
     return train_dataloader, val_dataloader
 
 
 def train_no_amp(input_path, n_epochs, model_path, experiment_name):
     model = ConvModel()
+    model.to(device)
     loss_fn = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+
+    # create dataloader
+    train_dataloader, val_dataloader = dataloader(input_path, batch_size=20, val_split=0.8) # increase batch_size to some value, try it out!
+
+    # ensure that anything you want on GPU (like data) should be notated by .cuda() aka .to(device)
+
+    # training - gpu
+    # post-processing - cpu
 
     # create csv file
     with open(f'../experiments/{experiment_name}.csv', 'w', newline='') as f:
@@ -121,15 +141,10 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
     for epoch in tqdm(range(n_epochs)):
         train_total_loss = 0
         val_total_loss = 0
-        train_dataloader, val_dataloader = dataloader(input_path, batch_size=1, val_split=0.8)
-
-        # print('passed dataloader')
-
-        # print letters after each line and see which part is taking the longest
 
         # training
         for image, lls_offset in train_dataloader:
-            lls_offset_pred = model(image).view(-1).to(torch.float64)
+            lls_offset_pred = model(image).view(-1).to(torch.float64).to(device)
             loss = loss_fn(lls_offset_pred, lls_offset)
             train_total_loss += loss
             optimizer.zero_grad()
@@ -137,14 +152,17 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
             optimizer.step()
         
         # validation
-        for image, lls_offset in val_dataloader:
-            lls_offset_pred = model(image).view(-1).to(torch.float64)
-            loss = loss_fn(lls_offset_pred, lls_offset)
-            val_total_loss += loss
+        with torch.no_grad():
+            model.eval()
+            for image, lls_offset in val_dataloader:
+                lls_offset_pred = model(image).view(-1).to(torch.float64).to(device)
+                loss = loss_fn(lls_offset_pred, lls_offset) # hm lowkey am not sure if i need to do .to(device) for offset
+                val_total_loss += loss
 
         print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}', flush=True)
         
-        # save model at every 1000th epoch
+        # from sayan, save every 10 epochs and best model best validation
+        # save model at every 1000th epoch,
         # if epoch % 2 == 0 and epoch != 0:
         #     print("saving model")
         #     torch.save(model.state_dict(), model_path)
