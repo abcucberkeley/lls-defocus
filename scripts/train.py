@@ -29,7 +29,7 @@ class ConvModel(nn.Module):
 
         # convolutional layers
         # [batch_size, channels, depth, height, width]
-        self.conv1 = nn.Conv3d(1, 32, kernel_size=3, stride=1, padding=1)
+        self.conv1 = nn.Conv3d(20, 32, kernel_size=3, stride=1, padding=1)
         self.conv2 = nn.Conv3d(32, 64, kernel_size=3, stride=1, padding=1)
         self.conv3 = nn.Conv3d(64, 128, kernel_size=3, stride=1, padding=1)
 
