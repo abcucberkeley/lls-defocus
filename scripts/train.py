@@ -77,7 +77,7 @@ class PSFDataset(torch.utils.data.Dataset):
             load_json = json.load(j)
             lls_offset = load_json["lls_defocus_offset"]
             lls_offset = round(lls_offset, 2) # round to to hundredths place
-            return image, lls_offset
+            return image.to(device), lls_offset
 
 # this should only return the dataloader for ONLY ONE defocus_xxx_xxx
 def dataloader(path, batch_size, val_split):
