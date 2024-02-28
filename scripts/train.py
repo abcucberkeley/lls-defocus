@@ -51,7 +51,7 @@ class ConvModel(nn.Module):
         x = F.relu(self.conv3(x))
         x = self.pool(x)
 
-        x = x.view(-1, 128 * 8 * 8 * 8)
+        x = x.view(20, 128 * 8 * 8 * 8)
         
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
