@@ -12,7 +12,6 @@ from loss_graph import plot_loss
 import cli
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # separate dataloader, conv model, etc into different files later on
-# device = torch.device() 
 # watch nvidia-smi to check that ur gpu is being used or not
 
 class ConvModel(nn.Module):
@@ -28,11 +27,13 @@ class ConvModel(nn.Module):
         # dropout - ensures that no one node will contribute to  uch. tries to ensure convergence to reach global min
 
         # convolutional layers
-        # TODO: find out exact size and debug to account for batch size
         # [batch_size, channels, depth, height, width]
         self.conv1 = nn.Conv3d(1, 32, kernel_size=3, stride=1, padding=1)
+        self.bn1 = nn.BatchNorm3d(32)
         self.conv2 = nn.Conv3d(32, 64, kernel_size=3, stride=1, padding=1)
+        self.bn2 = nn.BatchNorm3d(64)
         self.conv3 = nn.Conv3d(64, 128, kernel_size=3, stride=1, padding=1)
+        self.bn3 = nn.BatchNorm3d(128)
 
         # max pooling layer
         self.pool = nn.MaxPool3d(kernel_size=2, stride=2, padding=0)
@@ -40,17 +41,20 @@ class ConvModel(nn.Module):
         # fully connected layers
         self.fc1 = nn.Linear(128 * 8 * 8 * 8, 512)
         self.fc2 = nn.Linear(512, 1)
+
+        # dropout
+        self.dropout = nn.Dropout(0.2)
         
     def forward(self, x):
         # shape of x is (batch_size, 64, 64, 64)
         x = x.unsqueeze(1) # add dimension at index 1
         # shape of x is (batch_size, 1, 64, 64, 64)
-
-        x = F.relu(self.conv1(x))
+        x = self.dropout(x)
+        x = F.relu(self.bn1(self.conv1(x)))
         x = self.pool(x)
-        x = F.relu(self.conv2(x))
+        x = F.relu(self.bn2(self.conv2(x)))
         x = self.pool(x)
-        x = F.relu(self.conv3(x))
+        x = F.relu(self.bn3(self.conv3(x)))
         x = self.pool(x)
 
         # reshape into 2d tensor
