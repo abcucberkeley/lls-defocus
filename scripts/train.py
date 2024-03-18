@@ -16,7 +16,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # watch nvidia-smi to check that ur gpu is being used or not
 
 class ConvModel(nn.Module):
-    def __init__(self, batch_size):
+    def __init__(self):
         super().__init__()
 
         # gelu instead of relu, less rigid activation func than relu
@@ -42,11 +42,9 @@ class ConvModel(nn.Module):
         self.fc2 = nn.Linear(512, 1)
         
     def forward(self, x):
-        #x = x.unsqueeze(0).unsqueeze(0) # should be (batch size, 1, 64, 64, 64)
-        #x = x.unsqueeze(0)
-        print(x.shape)
-        x = x.unsqueeze(1)
-        print(x.shape)
+        # shape of x is (batch_size, 64, 64, 64)
+        x = x.unsqueeze(1) # add dimension at index 1
+        # shape of x is (batch_size, 1, 64, 64, 64)
 
         x = F.relu(self.conv1(x))
         x = self.pool(x)
@@ -55,14 +53,11 @@ class ConvModel(nn.Module):
         x = F.relu(self.conv3(x))
         x = self.pool(x)
 
+        # reshape into 2d tensor
         x = x.view(x.size(0), -1) 
-
-        #x = x.view(-1, 128 * 8 * 8 * 8)
         
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
-
-        # incorporate batch size to make it quicker
 
         return x
     
@@ -79,7 +74,7 @@ class PSFDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         image = io.imread(self.input_files[idx])
         image = torch.from_numpy(image) # turn numpy array into tensor
-        print("Image shape", image.shape)
+        # print("Image shape", image.shape)
         with open(self.gt_files[idx],'r') as j:
             load_json = json.load(j)
             lls_offset = load_json["lls_defocus_offset"]
@@ -126,7 +121,7 @@ def dataloader(path, batch_size, val_split):
 
 
 def train_no_amp(input_path, n_epochs, model_path, experiment_name):
-    model = ConvModel(batch_size=20)
+    model = ConvModel()
     model.to(device)
     loss_fn = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
@@ -151,14 +146,11 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
 
         # training
         for image, lls_offset in train_dataloader:
-            print("Image shape dataloader", image.shape)
-            result = model(image)
-            print(result.shape)
-            result = result.view(-1).to(torch.float64).to(device)
-            print(result.shape)
-
-
-
+            # print("Image shape dataloader", image.shape)
+            # result = model(image)
+            # print(result.shape)
+            # result = result.view(-1).to(torch.float64).to(device)
+            # print(result.shape)
             lls_offset_pred = model(image).view(-1).to(torch.float64).to(device)
             loss = loss_fn(lls_offset_pred, lls_offset.to(device))
             train_total_loss += loss
