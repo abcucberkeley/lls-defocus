@@ -16,7 +16,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # watch nvidia-smi to check that ur gpu is being used or not
 
 class ConvModel(nn.Module):
-    def __init__(self):
+    def __init__(self, batch_size):
         super().__init__()
 
         # gelu instead of relu, less rigid activation func than relu
@@ -28,6 +28,7 @@ class ConvModel(nn.Module):
         # dropout - ensures that no one node will contribute to  uch. tries to ensure convergence to reach global min
 
         # convolutional layers
+        # TODO: find out exact size and debug to account for batch size
         # [batch_size, channels, depth, height, width]
         self.conv1 = nn.Conv3d(1, 32, kernel_size=3, stride=1, padding=1)
         self.conv2 = nn.Conv3d(32, 64, kernel_size=3, stride=1, padding=1)
@@ -51,7 +52,7 @@ class ConvModel(nn.Module):
         x = F.relu(self.conv3(x))
         x = self.pool(x)
 
-        x = x.view(20, 128 * 8 * 8 * 8)
+        x = x.view(-1, 128 * 8 * 8 * 8)
         
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
@@ -119,7 +120,7 @@ def dataloader(path, batch_size, val_split):
 
 
 def train_no_amp(input_path, n_epochs, model_path, experiment_name):
-    model = ConvModel()
+    model = ConvModel(batch_size=20)
     model.to(device)
     loss_fn = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
