@@ -129,6 +129,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
     model.to(device)
     loss_fn = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+    min_val_loss = 100
 
     # create dataloader
     train_dataloader, val_dataloader = dataloader(input_path, batch_size=20, val_split=0.8) # increase batch_size to some value, try it out!
@@ -172,11 +173,15 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
 
         print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}', flush=True)
         
-        # from sayan, save every 10 epochs and best model best validation
-        # save model at every 1000th epoch,
-        # if epoch % 2 == 0 and epoch != 0:
-        #     print("saving model")
-        #     torch.save(model.state_dict(), model_path)
+        # save model with best validation loss
+        if val_total_loss < min_val_loss:
+            min_val_loss = val_total_loss
+            model_path += f'model_{epoch}'
+            torch.save(model.state_dict(), model_path)
+        elif epoch % 10 == 0 and epoch != 0:
+            # save model at every 10th epoch
+            model_path += f'model_best'
+            torch.save(model.state_dict(), model_path)
 
         # write to csv file
         with open(f'../experiments/{experiment_name}.csv', 'a', newline='') as f: # i changed from w to a, to append just check again
