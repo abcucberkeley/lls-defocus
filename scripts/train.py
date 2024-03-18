@@ -148,6 +148,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
 
         # training
         for image, lls_offset in train_dataloader:
+            print("Image shape dataloader", image.shape)
             result = model(image)
             print(result.shape)
             result = result.view(-1).to(torch.float64).to(device)
