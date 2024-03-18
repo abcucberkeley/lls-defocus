@@ -76,6 +76,7 @@ class PSFDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         image = io.imread(self.input_files[idx])
         image = torch.from_numpy(image) # turn numpy array into tensor
+        print("Image shape", image.shape)
         with open(self.gt_files[idx],'r') as j:
             load_json = json.load(j)
             lls_offset = load_json["lls_defocus_offset"]
