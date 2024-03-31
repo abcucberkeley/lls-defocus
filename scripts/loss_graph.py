@@ -29,7 +29,7 @@ def plot_loss(experiment_name, epoch):
 
 def plot(experiment_name):
     # Read the data from the CSV file into a DataFrame
-    df = pd.read_csv(f'/clusterfs/nvme/ethan/lls-defocus/experiments/{csv_file}')
+    df = pd.read_csv(f'/clusterfs/nvme/ethan/lls-defocus/experiments/{experiment_name}.csv')
 
     # Plot the data
     df.plot(y=["Training Loss", "Validation Loss"], marker='o')
