@@ -8,7 +8,7 @@ MEM='128G'
 JOB='test-004'
 
 input_path='/clusterfs/nvme/ethan/dataset/amplitude_large'
-n_epochs=1000
+n_epochs=100000
 model_path="/clusterfs/nvme/ethan/lls-defocus/models/"
 experiment_name='test-004'
 
