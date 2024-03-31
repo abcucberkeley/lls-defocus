@@ -42,7 +42,7 @@ def plot(experiment_name):
 if __name__ == "__main__":
     # Check if the correct number of arguments is provided
     if len(sys.argv) != 2:
-        print("Usage: python plot_function.py experiment_name")
+        print("Usage: python loss_graph.py experiment_name")
         sys.exit(1)
 
     # Extract experiment_name and csv_file from command-line arguments
