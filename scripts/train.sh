@@ -5,11 +5,11 @@ ENV=python
 TIMELIMIT='24:00:00'
 CPUS=1
 MEM='128G'
-JOB='test-004'
+JOB='test-003'
 
 input_path='/clusterfs/nvme/ethan/dataset/no_amplitude_large'
 n_epochs=1000
-model_path="/clusterfs/nvme/ethan/lls-defocus/models"
+model_path="/clusterfs/nvme/ethan/lls-defocus/models/"
 experiment_name='test-003'
 
 if [ $HANDLER = 'slurm' ];then

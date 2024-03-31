@@ -176,12 +176,12 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
         # save model with best validation loss
         if val_total_loss < min_val_loss:
             min_val_loss = val_total_loss
-            model_path += f'model_{epoch}'
-            torch.save(model.state_dict(), model_path)
+            path = model_path + f'model_{epoch}'
+            torch.save(model.state_dict(), path)
         elif epoch % 10 == 0 and epoch != 0:
             # save model at every 10th epoch
-            model_path += f'model_best'
-            torch.save(model.state_dict(), model_path)
+            path = model_path + f'model_best'
+            torch.save(model.state_dict(), path)
 
         # write to csv file
         with open(f'../experiments/{experiment_name}.csv', 'a', newline='') as f: # i changed from w to a, to append just check again
