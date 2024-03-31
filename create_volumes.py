@@ -99,13 +99,24 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, ph
 #             name = str(int(name) + 1)
 
 # create a larger dataset
+# name = "1"
+# amp = 0
+# fourier_emb = False
+# save_dir = "no_amplitude_large"
+# for zernike_mode in range(3,15):
+#     for lls_offset in np.linspace(-2, 2, 41):
+#         for photons in [100000, 200000, 300000, 400000, 500000]:
+#             if zernike_mode != 4:
+#                 aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir)
+#                 name = str(int(name) + 1)
+
 name = "1"
-amp = 0
 fourier_emb = False
-save_dir = "no_amplitude_large"
+save_dir = "amplitude_large"
 for zernike_mode in range(3,15):
     for lls_offset in np.linspace(-2, 2, 41):
         for photons in [100000, 200000, 300000, 400000, 500000]:
-            if zernike_mode != 4:
-                aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir)
-                name = str(int(name) + 1)
+            for amp in [0.0,0.5,1.0]:
+                if zernike_mode != 4:
+                    aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir)
+                    name = str(int(name) + 1)               
