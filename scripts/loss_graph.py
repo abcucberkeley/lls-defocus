@@ -41,13 +41,12 @@ def plot(experiment_name):
 
 if __name__ == "__main__":
     # Check if the correct number of arguments is provided
-    if len(sys.argv) != 3:
-        print("Usage: python plot_function.py experiment_name csv_file")
+    if len(sys.argv) != 2:
+        print("Usage: python plot_function.py experiment_name")
         sys.exit(1)
 
     # Extract experiment_name and csv_file from command-line arguments
     experiment_name = sys.argv[1]
-    csv_file = sys.argv[2]
 
     # Call the plot function
-    plot(experiment_name, csv_file)
+    plot(experiment_name)
