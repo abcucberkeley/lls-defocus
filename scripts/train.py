@@ -10,6 +10,7 @@ from tqdm import tqdm
 import csv
 from loss_graph import plot_loss
 import cli
+from loss import Custom_MAE
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # separate dataloader, conv model, etc into different files later on
 # watch nvidia-smi to check that ur gpu is being used or not
@@ -127,7 +128,8 @@ def dataloader(path, batch_size, val_split):
 def train_no_amp(input_path, n_epochs, model_path, experiment_name):
     model = ConvModel()
     model.to(device)
-    loss_fn = nn.MSELoss()
+    #loss_fn = nn.MSELoss()
+    loss_fn = Custom_MAE(threshold=0.05)
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     min_val_loss = 100
 
@@ -176,11 +178,11 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
         # save model with best validation loss
         if val_total_loss < min_val_loss:
             min_val_loss = val_total_loss
-            path = model_path + f'model_{epoch}'
+            path = model_path + f'model_best'
             torch.save(model.state_dict(), path)
         elif epoch % 10 == 0 and epoch != 0:
             # save model at every 10th epoch
-            path = model_path + f'model_best'
+            path = model_path + f'model_{epoch}'
             torch.save(model.state_dict(), path)
 
         # write to csv file
@@ -191,7 +193,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
             writer.writerow([train_loss, val_loss])
         
         # update loss graph
-        plot_loss(experiment_name, epoch)
+        #plot_loss(experiment_name, epoch)
     
 
 def train(input_path, n_epochs):
