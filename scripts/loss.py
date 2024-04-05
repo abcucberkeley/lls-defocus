@@ -3,6 +3,7 @@ import torch.nn as nn
 
 class Custom_MAE(nn.Module):
     def __init__(self, threshold):
+        super().__init__()
         self.threshold = threshold
 
     def forward(self, y_pred, y_true):
