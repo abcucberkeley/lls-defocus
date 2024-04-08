@@ -251,8 +251,11 @@ def main(args=None):
     if not os.path.exists(new_path):
         os.makedirs(new_path)
     else:
-        raise Exception(f"Experiment {args.experiment_name} already exists.")
-
+        user_input = input(f"Do you want to proceed overwriting Experiment {args.experiment_name}? (yes/no): ").strip().lower()
+        if user_input == "no":
+            print("Test halted.")
+            return
+            
     train_no_amp(args.input_path, args.n_epochs, args.model_path, args.experiment_name)
     
 
