@@ -7,6 +7,11 @@ class Custom_MAE(nn.Module):
         self.threshold = threshold
 
     def forward(self, y_pred, y_true):
+        has_nan_pred = torch.isnan(y_pred).any()
+        has_nan_true = torch.isnan(y_true).any()
+        assert not has_nan_pred, "Tensor contains NaN values"
+        assert not has_nan_true, "Tensor contains NaN values"
+
         # if difference is greater than the threshold, penalize more
         abs_diff = torch.abs(y_pred - y_true)
         small_dev_mask = (abs_diff >= self.threshold) & (abs_diff < 1) & (abs_diff > 0)
