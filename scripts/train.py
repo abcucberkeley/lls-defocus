@@ -250,11 +250,11 @@ def main(args=None):
     new_path = f"/clusterfs/nvme/ethan/lls-defocus/models/{args.experiment_name}"
     if not os.path.exists(new_path):
         os.makedirs(new_path)
-    else:
-        user_input = input(f"Do you want to proceed overwriting Experiment {args.experiment_name}? (yes/no): ").strip().lower()
-        if user_input == "no":
-            print("Test halted.")
-            return
+    # else:
+    #     user_input = input(f"Do you want to proceed overwriting Experiment {args.experiment_name}? (yes/no): ").strip().lower()
+    #     if user_input == "no":
+    #         print("Test halted.")
+    #         return
             
     train_no_amp(args.input_path, args.n_epochs, args.model_path, args.experiment_name)
     
