@@ -13,6 +13,6 @@ class Custom_MAE(nn.Module):
 
         # penalize for all abs_diff that are greater than the threshold 
         # to ensure penalization of small (yet still significant) deviations from true value
-        loss = torch.where(small_dev_mask, 1 / abs_diff, abs_diff**2)
+        loss = torch.where(small_dev_mask, 1 / (abs_diff + 1e-6), abs_diff**2) # avoid dividing by zero
     
         return torch.mean(loss)
