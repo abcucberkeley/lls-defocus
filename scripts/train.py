@@ -11,6 +11,8 @@ import csv
 from loss_graph import plot_loss
 import cli
 from loss import Custom_MAE
+import torch.optim.lr_scheduler as lr_scheduler
+from torch.optim.lr_scheduler import StepLR
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # separate dataloader, conv model, etc into different files later on
 # watch nvidia-smi to check that ur gpu is being used or not
@@ -245,6 +247,12 @@ def main(args=None):
     print(args.n_epochs)
     print(args.model_path)
     print(args.experiment_name)
+    new_path = f"/clusterfs/nvme/ethan/lls-defocus/models/{args.experiment_name}"
+    if not os.path.exists(new_path):
+        os.makedirs(new_path)
+    else:
+        raise Exception(f"Experiment {args.experiment_name} already exists.")
+
     train_no_amp(args.input_path, args.n_epochs, args.model_path, args.experiment_name)
     
 
