@@ -132,7 +132,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
     model.to(device)
     #loss_fn = nn.MSELoss()
     loss_fn = Custom_MAE(threshold=0.05)
-    optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+    optimizer = optim.SGD(model.parameters(), lr=0.008, momentum=0.9)
 
     # scheduler to adjust lr at every step_size epochs by multiplying the lr with gamma
     scheduler = lr_scheduler.StepLR(optimizer, step_size=15, gamma=0.1)  
