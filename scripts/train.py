@@ -81,6 +81,8 @@ class PSFDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         image = io.imread(self.input_files[idx])
         image = torch.from_numpy(image) # turn numpy array into tensor
+        has_nan_image = torch.isnan(image).any()
+        assert not has_nan_image, "Image contains NaN values"
         # print("Image shape", image.shape)
         with open(self.gt_files[idx],'r') as j:
             load_json = json.load(j)
