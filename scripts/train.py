@@ -133,6 +133,9 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
     #loss_fn = nn.MSELoss()
     loss_fn = Custom_MAE(threshold=0.05)
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+
+    # scheduler to adjust lr at every step_size epochs by multiplying the lr with gamma
+    scheduler = lr_scheduler.StepLR(optimizer, step_size=15, gamma=0.1)  
     min_val_loss = 100
 
     # create dataloader
@@ -166,6 +169,8 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+
+            scheduler.step()
         
         # validation
         with torch.no_grad():

@@ -9,8 +9,8 @@ class Custom_MAE(nn.Module):
     def forward(self, y_pred, y_true):
         has_nan_pred = torch.isnan(y_pred).any() # hm already has nan.. prob has to do with 
         has_nan_true = torch.isnan(y_true).any()
-        assert not has_nan_pred, "Tensor contains NaN values"
-        assert not has_nan_true, "Tensor contains NaN values"
+        assert not has_nan_pred, "Pred tensor contains NaN values"
+        assert not has_nan_true, "True tensor contains NaN values"
 
         # if difference is greater than the threshold, penalize more
         abs_diff = torch.abs(y_pred - y_true)
