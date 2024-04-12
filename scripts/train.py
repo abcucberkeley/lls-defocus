@@ -17,6 +17,19 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # separate dataloader, conv model, etc into different files later on
 # watch nvidia-smi to check that ur gpu is being used or not
 
+# dropout after convolutions
+# load saved model and test on training data and new data
+# use AdamW for optimizer
+# larger kernel? in nn
+# reduce batch size?
+# add a few more layers -> do resnet in pytorch
+# try both losses
+# increase data size (10000 psfs)
+
+model = torch.hub.load('pytorch/vision:v0.10.0', 'resnet34', pretrained=False)
+num_ftrs = model.fc.in_features
+model.fc = nn.Linear(num_ftrs, 1)
+
 class ConvModel(nn.Module):
     def __init__(self):
         super().__init__()
@@ -52,13 +65,15 @@ class ConvModel(nn.Module):
         # shape of x is (batch_size, 64, 64, 64)
         x = x.unsqueeze(1) # add dimension at index 1
         # shape of x is (batch_size, 1, 64, 64, 64)
-        x = self.dropout(x)
+        x = self.dropout(x) # make this after a convolution or pooling
         x = F.relu(self.bn1(self.conv1(x)))
         x = self.pool(x)
         x = F.relu(self.bn2(self.conv2(x)))
         x = self.pool(x)
         x = F.relu(self.bn3(self.conv3(x)))
         x = self.pool(x)
+
+        # gelu, elu
 
         # reshape into 2d tensor
         x = x.view(x.size(0), -1) 
@@ -134,7 +149,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
     model.to(device)
     #loss_fn = nn.MSELoss()
     loss_fn = Custom_MAE(threshold=0.05)
-    optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+    optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9) # use Adam
 
     # scheduler to adjust lr at every step_size epochs by multiplying the lr with gamma
     scheduler = lr_scheduler.StepLR(optimizer, step_size=15, gamma=0.1)  
@@ -172,7 +187,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
             loss.backward()
             optimizer.step()
 
-            scheduler.step()
+            #scheduler.step(loss)
         
         # validation
         with torch.no_grad():
@@ -181,6 +196,7 @@ def train_no_amp(input_path, n_epochs, model_path, experiment_name):
                 lls_offset_pred = model(image).view(-1).to(torch.float64).to(device)
                 loss = loss_fn(lls_offset_pred, lls_offset.to(device)).cpu().detach().numpy()
                 val_total_loss += loss
+        scheduler.step(val_total_loss) # could be mean too
 
         print(f'Epoch: {epoch}, Training Loss: {train_total_loss / len(train_dataloader)}, Validation Loss: {val_total_loss / len(val_dataloader)}', flush=True)
         
