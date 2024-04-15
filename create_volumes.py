@@ -123,14 +123,15 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, ph
 
 # different distributions: single bimodal powerlaw dirichlet
 
-name = "1"
-fourier_emb = False
-save_dir = "amplitude_larger"
-for dist in ["single", "bimodal", "powerlaw", "dirichlet"]:
-    for zernike_mode in range(3,15):
-        for lls_offset in np.linspace(-2, 2, 41):
-            for photons in [100000, 200000, 300000, 400000, 500000]: #  might be too much, check default ranges
-                for amp in np.linspace(0, 1, 11):
-                    if zernike_mode != 4:
-                        aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir, dist)
-                        name = str(int(name) + 1)  
+if __name__ == '__main__':
+    name = "1"
+    fourier_emb = False
+    save_dir = "amplitude_larger"
+    for dist in ["single", "bimodal", "powerlaw", "dirichlet"]:
+        for zernike_mode in range(3,15):
+            for lls_offset in np.linspace(-2, 2, 41):
+                for photons in [100000, 200000, 300000, 400000, 500000]: #  might be too much, check default ranges
+                    for amp in np.linspace(0, 1, 11):
+                        if zernike_mode != 4:
+                            aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir, dist)
+                            name = str(int(name) + 1)  
