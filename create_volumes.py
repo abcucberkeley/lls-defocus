@@ -19,7 +19,7 @@ import numpy as np
 data_dir = "/clusterfs/nvme/ethan/dataset"
 #data_dir = "/clusterfs/nvme/ethan/lls-defocus/data"
 
-def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, photons, save_dir):
+def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, photons, save_dir, dist):
 
     # set up PSF generator with correct voxel size
     gen = SyntheticPSF(
@@ -37,7 +37,7 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, ph
 
     phi = Wavefront(
         amplitudes=zernikes,
-        distribution='powerlaw',
+        distribution=dist,
         mode_weights='pyramid',
         modes=15,
         signed=True,
@@ -110,13 +110,27 @@ def aberrated_defocused_psf(amp, lls_offset, zernike_mode, fourier_emb, name, ph
 #                 aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir)
 #                 name = str(int(name) + 1)
 
+# name = "1"
+# fourier_emb = False
+# save_dir = "amplitude_large"
+# for zernike_mode in range(3,15):
+#     for lls_offset in np.linspace(-2, 2, 41):
+#         for photons in [100000, 200000, 300000, 400000, 500000]: #  might be too much, check default ranges
+#             for amp in [0.0,0.5,1.0]: # more bins within
+#                 if zernike_mode != 4:
+#                     aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir)
+#                     name = str(int(name) + 1)              
+
+# different distributions: single bimodal powerlaw dirichlet
+
 name = "1"
 fourier_emb = False
-save_dir = "amplitude_large"
-for zernike_mode in range(3,15):
-    for lls_offset in np.linspace(-2, 2, 41):
-        for photons in [100000, 200000, 300000, 400000, 500000]:
-            for amp in [0.0,0.5,1.0]:
-                if zernike_mode != 4:
-                    aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir)
-                    name = str(int(name) + 1)               
+save_dir = "amplitude_larger"
+for dist in ["single", "bimodal", "powerlaw", "dirichlet"]:
+    for zernike_mode in range(3,15):
+        for lls_offset in np.linspace(-2, 2, 41):
+            for photons in [100000, 200000, 300000, 400000, 500000]: #  might be too much, check default ranges
+                for amp in np.linspace(0, 1, 11):
+                    if zernike_mode != 4:
+                        aberrated_defocused_psf(amp, round(lls_offset,2), zernike_mode, fourier_emb, name, photons, save_dir, dist)
+                        name = str(int(name) + 1)  
